@@ -1,0 +1,45 @@
+{
+  // Visit https://aka.ms/tsconfig to read more about this file
+  "compilerOptions": {
+   
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+  
+    "module": "ESNext",
+    "target": "esnext",
+    "types": [],
+    "moduleResolution": "node",
+   
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+ 
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "esModuleInterop": true,
+    
+    
+    "resolveJsonModule": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["*"],
+      "@/config/*": ["config/*"],
+      "@/middleware/*": ["middleware/*"],
+      "@/utils/*": ["/utils/*"],
+      "@/lib/prisma": ["lib/prisma"],
+    },
+
+    
+    "strict": true,
+    "jsx": "react-jsx",
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "noUncheckedSideEffectImports": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true,
+  },
+   "include": ["src/**/**/*"],
+  "exclude": ["node_modules", "dist", "generated", "lib"]
+}

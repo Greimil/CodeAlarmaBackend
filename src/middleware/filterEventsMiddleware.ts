@@ -1,0 +1,68 @@
+import {
+  type EventoPendiente,
+  type EventEvaluated,
+  type ApiResponse,
+} from "../types";
+import { fetchEvents } from "../api/quality/quality.services";
+import { differenceInMinutes, format, formatDate, parseISO } from "date-fns";
+import { es } from "date-fns/locale";
+
+export const filterEventsMiddleware = async (
+  req: any,
+  res: any,
+  next: () => void
+): Promise<any> => {
+  try {
+    let { rows }: ApiResponse = await fetchEvents();
+    let now = new Date();
+    let res: EventEvaluated[] = [];
+
+    rows.map((evento: EventoPendiente) => {
+      let createdAtEventDate = parseISODate(evento.rec_isoFechaRecepcion);
+
+      if (createdAtEventDate) {
+        const minutesDifference = Math.abs(
+          differenceInMinutes(now, createdAtEventDate)
+        );
+
+        if (minutesDifference < 60) {
+          res.push({
+            id: evento.Id,
+            operator: evento.operadorAtendiendoCuenta || "Grey",
+            createdAt: format(
+              createdAtEventDate,
+              "d 'de' MMMM 'de' yyyy, HH:mm",
+              { locale: es }
+            ),
+            processedAt: format(
+              parseISODate(evento.rec_isoFechaProceso)!,
+              "d 'de' MMMM 'de' yyyy, HH:mm",
+              { locale: es }
+            ),
+            accountId: evento.rec_iidcuenta,
+            code: evento.rec_calarma,
+            operatorNotes: evento.rec_cObservaciones,
+          });
+        }
+      }
+    });
+
+    req.filteredEvents = res;
+    next();
+  } catch (err) {
+    throw err;
+  }
+};
+
+function parseISODate(isoString: string): Date | null {
+  if (!isoString || typeof isoString !== "string") return null;
+
+  const fecha = parseISO(isoString);
+
+  if (isNaN(fecha.getTime())) {
+    console.warn("Fecha ISO inválida:", isoString);
+    return null;
+  }
+
+  return fecha;
+}

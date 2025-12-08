@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+
+// export interface EventEvaluated {
+//   id: string;
+//   createdAt: string;
+//   processedAt: string;
+//   operator?: string;
+//   operatorNotes?: string;
+//   accountId: string;
+//   code: string; 
+//   accountObservation?: string;
+//   evaluacionLlamada?: string;
+//   cumplimientoProtocolo?: "Cumple protocolo" | "Cumplimiento parcial" | "Incumple protocolo";
+//   esFaltaRecurrente?: boolean;
+//   cumpleSLA?: boolean; 
+//   puntuacionLlamada?: number; 
+//   evaluacionQA?: number; 
+//   accionRecomendada?: "Ninguna" | "Capacitación" | "Amonestación verbal" | "Amonestación escrita" | "Investigación";
+//   conclusion?: string
+// }
+
+
+model processedEvents {
+  id String @id
+  createdAt DateTime
+  processedAt DateTime
+  operator String
+  operatorNotes String
+  accountId String 
+  code String 
+  accountObservation String
+  evaluacionLlamada String
+  cumplimientoProtocolo String
+  esFaltaRecurrente Boolean
+  cumpleSLA Boolean
+  puntuacionLlamada Int
+  evaluacionQA Int
+  accionRecomendada String
+  conclusion String
+}
