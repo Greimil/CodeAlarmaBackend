@@ -1,13 +1,16 @@
 import { differenceInMinutes, format, formatDate, parseISO } from "date-fns";
 import { es } from "date-fns/locale";
+import { toPrismaProcessedEvent } from "./QaAgent/mappers";
 import {
   type ApiResponse,
   type EvaluacionLLM,
   type EventEvaluated,
+  type EventoPendiente,
 } from "@/types";
 import { prisma } from "@/lib/prisma";
 import { llamadas } from "./QaAgent/systemPrompt";
 import { main } from "./QaAgent/QaAgent";
+import type { Prisma } from "@/generated/prisma";
 
 const URL =
   "https://codealarma.net/rest/Search/ReporteHistorico?OrdenarFecha=DESC&Estados=3&page=1&start=0&limit=100&Cuentas=0";
@@ -18,7 +21,7 @@ export const fetchEvents = async (): Promise<ApiResponse> => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "5CDE6240-3B4F-4525-99FE-5733C17FDE10",
+        Authorization: "FC02ABC7-74F2-4DDF-9A3F-D8C43A555B5B",
       },
     });
 
@@ -101,7 +104,7 @@ export const AIprocessReq = async (events: EventEvaluated[]) => {
       const mainResult = await main(`
             Nombre: ${event.operator}
             Prioridad: 1
-            Evento ID: ${event.id}
+            Evento ID: ${event.eventID}
             Id de la cuenta: ${event.accountId}
             Hora de proceso del evento: ${event.createdAt}
             fecha de llegada de evento: ${event.processedAt}
@@ -111,8 +114,21 @@ export const AIprocessReq = async (events: EventEvaluated[]) => {
       agentRes = safeParseLLMResponse(mainResult);
 
       let { evaluacionQA, puntuacionLlamada } = calcularPuntuaciones(agentRes);
-      result.push({ ...event, ...agentRes, evaluacionQA, puntuacionLlamada });
+      let eventoCompleteAndClean = {
+        ...event,
+        ...agentRes,
+        evaluacionQA,
+        puntuacionLlamada,
+      };
+
+      result.push(eventoCompleteAndClean);
     }
+    
+    debugger
+    console.log(result)
+    if(result.length >= 1)  await createOperatorReports(result)
+
+   
 
     return result;
   } catch (err) {
@@ -120,26 +136,48 @@ export const AIprocessReq = async (events: EventEvaluated[]) => {
   }
 };
 
-const createOperatorReport = async (EventEvaluated: EventEvaluated[]) => {
+export const createOperatorReports = async (
+  EventEvaluated: EventEvaluated[]
+) => {
   try {
+    let eventosToadd: Prisma.processedEventsCreateManyInput[] = [];
+    for (const e of EventEvaluated) {
+      eventosToadd.push(toPrismaProcessedEvent(e));
+    }
     const record = await prisma.processedEvents.createMany({
-      data: [...EventEvaluated]
-    })
-
-  
+      data: eventosToadd,
+    });
+    return record.count;
   } catch (err) {
     throw err;
   }
 };
 
-const searchDatabase = async (event: EventEvaluated): Promise<boolean> => {
+// export const createOperatorReport = async (EventEvaluated: EventEvaluated) => {
+//   try {
+//     let transforEvent = toPrismaProcessedEvent(EventEvaluated);
+
+//     const record = await prisma.processedEvents.create({
+//       data: transforEvent,
+//     });
+
+//     return record;
+//   } catch (err) {
+//     throw err;
+//   }
+// };
+
+export const searchDatabase = async (
+  event: EventoPendiente
+): Promise<boolean> => {
   try {
     const recordExist = await prisma.processedEvents.findMany({
       where: {
-        AND: [{ id: String(event.id) }, { createdAt: event.createdAt }],
+        AND: [{ eventID: String(event.Id) }, { accountId: event.rec_iidcuenta }],
       },
     });
-    return recordExist.length > 0;
+
+    return recordExist.length === 0;
   } catch (err) {
     console.error("Fetch error:", (err as Error).message);
     throw err;

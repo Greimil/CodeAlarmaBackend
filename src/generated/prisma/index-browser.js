@@ -119,21 +119,31 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.ProcessedEventsScalarFieldEnum = {
   id: 'id',
+  eventID: 'eventID',
   createdAt: 'createdAt',
   processedAt: 'processedAt',
-  slaTime: 'slaTime',
-  complianceSlatime: 'complianceSlatime',
-  Operator: 'Operator',
-  operatorJustify: 'operatorJustify',
-  operatorComment: 'operatorComment',
-  accoundId: 'accoundId',
+  operator: 'operator',
+  operatorNotes: 'operatorNotes',
+  accountId: 'accountId',
   code: 'code',
-  accuntObservation: 'accuntObservation'
+  accountObservation: 'accountObservation',
+  evaluacionLlamada: 'evaluacionLlamada',
+  cumplimientoProtocolo: 'cumplimientoProtocolo',
+  esFaltaRecurrente: 'esFaltaRecurrente',
+  cumpleSLA: 'cumpleSLA',
+  puntuacionLlamada: 'puntuacionLlamada',
+  evaluacionQA: 'evaluacionQA',
+  accionRecomendada: 'accionRecomendada'
 };
 
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
 };
 
 

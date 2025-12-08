@@ -1,3 +1,5 @@
+import { Prisma } from "@/generated/prisma";
+
 export interface ApiResponse {
   success: boolean;
   total: number;
@@ -136,34 +138,9 @@ export interface EventoPendiente {
 }
 
 
-// export interface eventFilted  {
-//   id: String;
-//   createdAt: string;
-//   processedAt: string;
-//   slaTime?: string;
-//   complianceSlatime?: Boolean;
-//   Operator?: String;
-//   operatorJustify?: String;
-//   operatorComment?: String;
-//   accoundId: String;
-//   code: String; 
-//   accuntObservation: String;
-//   recommendAction?: String;
-//   conclusion?: String;
-
-//   "evaluacionLlamada": "Llamada atendida de manera efectiva con confirmación de emergencia y despacho de unidad policial.",
-//         "cumpleSLA": true,
-//         "tiempoRealVsSLA": "3 min / 10 min",
-//         "justificacionOperador": "No presentó justificación",
-//         "justificacionValida": true,
-//         "cumplimientoProtocolo": "Cumple protocolo",
-//         "esFaltaRecurrente": false,
-//         "evaluacionQA": 100,
-//         "puntuacionLlamada": 10
-// }
 
 export interface EventEvaluated {
-  id: string;
+  eventID: string;
   createdAt: string;
   processedAt: string;
   operator?: string;
@@ -178,10 +155,7 @@ export interface EventEvaluated {
   puntuacionLlamada?: number; 
   evaluacionQA?: number; 
   accionRecomendada?: "Ninguna" | "Capacitación" | "Amonestación verbal" | "Amonestación escrita" | "Investigación";
-  conclusion?: string
 }
-
-
 
 
 export interface EvaluacionLLM {
@@ -189,4 +163,16 @@ export interface EvaluacionLLM {
   cumplimientoProtocolo: "Cumple protocolo" | "Incumple protocolo" | "Cumplimiento parcial",
   esFaltaRecurrente: boolean
 }
+
+// Prisma Interfaces
+
+
+
+// Usa el tipo generado por Prisma
+type ProcessedEventInput = Prisma.processedEventsCreateManyInput;
+
+type Input = Prisma.processedEventsCreateManyInput[];
+
+// Para create
+type SingleInput = Prisma.processedEventsCreateInput;
 

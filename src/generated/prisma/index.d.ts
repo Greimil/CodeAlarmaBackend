@@ -868,94 +868,150 @@ export namespace Prisma {
 
   export type AggregateProcessedEvents = {
     _count: ProcessedEventsCountAggregateOutputType | null
+    _avg: ProcessedEventsAvgAggregateOutputType | null
+    _sum: ProcessedEventsSumAggregateOutputType | null
     _min: ProcessedEventsMinAggregateOutputType | null
     _max: ProcessedEventsMaxAggregateOutputType | null
   }
 
+  export type ProcessedEventsAvgAggregateOutputType = {
+    id: number | null
+    puntuacionLlamada: number | null
+    evaluacionQA: number | null
+  }
+
+  export type ProcessedEventsSumAggregateOutputType = {
+    id: number | null
+    puntuacionLlamada: number | null
+    evaluacionQA: number | null
+  }
+
   export type ProcessedEventsMinAggregateOutputType = {
-    id: string | null
+    id: number | null
+    eventID: string | null
     createdAt: Date | null
     processedAt: Date | null
-    slaTime: Date | null
-    complianceSlatime: boolean | null
-    Operator: string | null
-    operatorJustify: string | null
-    operatorComment: string | null
-    accoundId: string | null
+    operator: string | null
+    operatorNotes: string | null
+    accountId: string | null
     code: string | null
-    accuntObservation: string | null
+    accountObservation: string | null
+    evaluacionLlamada: string | null
+    cumplimientoProtocolo: string | null
+    esFaltaRecurrente: boolean | null
+    cumpleSLA: boolean | null
+    puntuacionLlamada: number | null
+    evaluacionQA: number | null
+    accionRecomendada: string | null
   }
 
   export type ProcessedEventsMaxAggregateOutputType = {
-    id: string | null
+    id: number | null
+    eventID: string | null
     createdAt: Date | null
     processedAt: Date | null
-    slaTime: Date | null
-    complianceSlatime: boolean | null
-    Operator: string | null
-    operatorJustify: string | null
-    operatorComment: string | null
-    accoundId: string | null
+    operator: string | null
+    operatorNotes: string | null
+    accountId: string | null
     code: string | null
-    accuntObservation: string | null
+    accountObservation: string | null
+    evaluacionLlamada: string | null
+    cumplimientoProtocolo: string | null
+    esFaltaRecurrente: boolean | null
+    cumpleSLA: boolean | null
+    puntuacionLlamada: number | null
+    evaluacionQA: number | null
+    accionRecomendada: string | null
   }
 
   export type ProcessedEventsCountAggregateOutputType = {
     id: number
+    eventID: number
     createdAt: number
     processedAt: number
-    slaTime: number
-    complianceSlatime: number
-    Operator: number
-    operatorJustify: number
-    operatorComment: number
-    accoundId: number
+    operator: number
+    operatorNotes: number
+    accountId: number
     code: number
-    accuntObservation: number
+    accountObservation: number
+    evaluacionLlamada: number
+    cumplimientoProtocolo: number
+    esFaltaRecurrente: number
+    cumpleSLA: number
+    puntuacionLlamada: number
+    evaluacionQA: number
+    accionRecomendada: number
     _all: number
   }
 
 
+  export type ProcessedEventsAvgAggregateInputType = {
+    id?: true
+    puntuacionLlamada?: true
+    evaluacionQA?: true
+  }
+
+  export type ProcessedEventsSumAggregateInputType = {
+    id?: true
+    puntuacionLlamada?: true
+    evaluacionQA?: true
+  }
+
   export type ProcessedEventsMinAggregateInputType = {
     id?: true
+    eventID?: true
     createdAt?: true
     processedAt?: true
-    slaTime?: true
-    complianceSlatime?: true
-    Operator?: true
-    operatorJustify?: true
-    operatorComment?: true
-    accoundId?: true
+    operator?: true
+    operatorNotes?: true
+    accountId?: true
     code?: true
-    accuntObservation?: true
+    accountObservation?: true
+    evaluacionLlamada?: true
+    cumplimientoProtocolo?: true
+    esFaltaRecurrente?: true
+    cumpleSLA?: true
+    puntuacionLlamada?: true
+    evaluacionQA?: true
+    accionRecomendada?: true
   }
 
   export type ProcessedEventsMaxAggregateInputType = {
     id?: true
+    eventID?: true
     createdAt?: true
     processedAt?: true
-    slaTime?: true
-    complianceSlatime?: true
-    Operator?: true
-    operatorJustify?: true
-    operatorComment?: true
-    accoundId?: true
+    operator?: true
+    operatorNotes?: true
+    accountId?: true
     code?: true
-    accuntObservation?: true
+    accountObservation?: true
+    evaluacionLlamada?: true
+    cumplimientoProtocolo?: true
+    esFaltaRecurrente?: true
+    cumpleSLA?: true
+    puntuacionLlamada?: true
+    evaluacionQA?: true
+    accionRecomendada?: true
   }
 
   export type ProcessedEventsCountAggregateInputType = {
     id?: true
+    eventID?: true
     createdAt?: true
     processedAt?: true
-    slaTime?: true
-    complianceSlatime?: true
-    Operator?: true
-    operatorJustify?: true
-    operatorComment?: true
-    accoundId?: true
+    operator?: true
+    operatorNotes?: true
+    accountId?: true
     code?: true
-    accuntObservation?: true
+    accountObservation?: true
+    evaluacionLlamada?: true
+    cumplimientoProtocolo?: true
+    esFaltaRecurrente?: true
+    cumpleSLA?: true
+    puntuacionLlamada?: true
+    evaluacionQA?: true
+    accionRecomendada?: true
     _all?: true
   }
 
@@ -997,6 +1053,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: ProcessedEventsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ProcessedEventsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: ProcessedEventsMinAggregateInputType
@@ -1027,23 +1095,32 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: ProcessedEventsCountAggregateInputType | true
+    _avg?: ProcessedEventsAvgAggregateInputType
+    _sum?: ProcessedEventsSumAggregateInputType
     _min?: ProcessedEventsMinAggregateInputType
     _max?: ProcessedEventsMaxAggregateInputType
   }
 
   export type ProcessedEventsGroupByOutputType = {
-    id: string
+    id: number
+    eventID: string
     createdAt: Date
     processedAt: Date
-    slaTime: Date
-    complianceSlatime: boolean
-    Operator: string
-    operatorJustify: string
-    operatorComment: string
-    accoundId: string
+    operator: string
+    operatorNotes: string | null
+    accountId: string
     code: string
-    accuntObservation: string
+    accountObservation: string | null
+    evaluacionLlamada: string
+    cumplimientoProtocolo: string
+    esFaltaRecurrente: boolean
+    cumpleSLA: boolean
+    puntuacionLlamada: number
+    evaluacionQA: number
+    accionRecomendada: string
     _count: ProcessedEventsCountAggregateOutputType | null
+    _avg: ProcessedEventsAvgAggregateOutputType | null
+    _sum: ProcessedEventsSumAggregateOutputType | null
     _min: ProcessedEventsMinAggregateOutputType | null
     _max: ProcessedEventsMaxAggregateOutputType | null
   }
@@ -1064,77 +1141,102 @@ export namespace Prisma {
 
   export type processedEventsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    eventID?: boolean
     createdAt?: boolean
     processedAt?: boolean
-    slaTime?: boolean
-    complianceSlatime?: boolean
-    Operator?: boolean
-    operatorJustify?: boolean
-    operatorComment?: boolean
-    accoundId?: boolean
+    operator?: boolean
+    operatorNotes?: boolean
+    accountId?: boolean
     code?: boolean
-    accuntObservation?: boolean
+    accountObservation?: boolean
+    evaluacionLlamada?: boolean
+    cumplimientoProtocolo?: boolean
+    esFaltaRecurrente?: boolean
+    cumpleSLA?: boolean
+    puntuacionLlamada?: boolean
+    evaluacionQA?: boolean
+    accionRecomendada?: boolean
   }, ExtArgs["result"]["processedEvents"]>
 
   export type processedEventsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    eventID?: boolean
     createdAt?: boolean
     processedAt?: boolean
-    slaTime?: boolean
-    complianceSlatime?: boolean
-    Operator?: boolean
-    operatorJustify?: boolean
-    operatorComment?: boolean
-    accoundId?: boolean
+    operator?: boolean
+    operatorNotes?: boolean
+    accountId?: boolean
     code?: boolean
-    accuntObservation?: boolean
+    accountObservation?: boolean
+    evaluacionLlamada?: boolean
+    cumplimientoProtocolo?: boolean
+    esFaltaRecurrente?: boolean
+    cumpleSLA?: boolean
+    puntuacionLlamada?: boolean
+    evaluacionQA?: boolean
+    accionRecomendada?: boolean
   }, ExtArgs["result"]["processedEvents"]>
 
   export type processedEventsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    eventID?: boolean
     createdAt?: boolean
     processedAt?: boolean
-    slaTime?: boolean
-    complianceSlatime?: boolean
-    Operator?: boolean
-    operatorJustify?: boolean
-    operatorComment?: boolean
-    accoundId?: boolean
+    operator?: boolean
+    operatorNotes?: boolean
+    accountId?: boolean
     code?: boolean
-    accuntObservation?: boolean
+    accountObservation?: boolean
+    evaluacionLlamada?: boolean
+    cumplimientoProtocolo?: boolean
+    esFaltaRecurrente?: boolean
+    cumpleSLA?: boolean
+    puntuacionLlamada?: boolean
+    evaluacionQA?: boolean
+    accionRecomendada?: boolean
   }, ExtArgs["result"]["processedEvents"]>
 
   export type processedEventsSelectScalar = {
     id?: boolean
+    eventID?: boolean
     createdAt?: boolean
     processedAt?: boolean
-    slaTime?: boolean
-    complianceSlatime?: boolean
-    Operator?: boolean
-    operatorJustify?: boolean
-    operatorComment?: boolean
-    accoundId?: boolean
+    operator?: boolean
+    operatorNotes?: boolean
+    accountId?: boolean
     code?: boolean
-    accuntObservation?: boolean
+    accountObservation?: boolean
+    evaluacionLlamada?: boolean
+    cumplimientoProtocolo?: boolean
+    esFaltaRecurrente?: boolean
+    cumpleSLA?: boolean
+    puntuacionLlamada?: boolean
+    evaluacionQA?: boolean
+    accionRecomendada?: boolean
   }
 
-  export type processedEventsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "processedAt" | "slaTime" | "complianceSlatime" | "Operator" | "operatorJustify" | "operatorComment" | "accoundId" | "code" | "accuntObservation", ExtArgs["result"]["processedEvents"]>
+  export type processedEventsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "eventID" | "createdAt" | "processedAt" | "operator" | "operatorNotes" | "accountId" | "code" | "accountObservation" | "evaluacionLlamada" | "cumplimientoProtocolo" | "esFaltaRecurrente" | "cumpleSLA" | "puntuacionLlamada" | "evaluacionQA" | "accionRecomendada", ExtArgs["result"]["processedEvents"]>
 
   export type $processedEventsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "processedEvents"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
-      id: string
+      id: number
+      eventID: string
       createdAt: Date
       processedAt: Date
-      slaTime: Date
-      complianceSlatime: boolean
-      Operator: string
-      operatorJustify: string
-      operatorComment: string
-      accoundId: string
+      operator: string
+      operatorNotes: string | null
+      accountId: string
       code: string
-      accuntObservation: string
+      accountObservation: string | null
+      evaluacionLlamada: string
+      cumplimientoProtocolo: string
+      esFaltaRecurrente: boolean
+      cumpleSLA: boolean
+      puntuacionLlamada: number
+      evaluacionQA: number
+      accionRecomendada: string
     }, ExtArgs["result"]["processedEvents"]>
     composites: {}
   }
@@ -1558,17 +1660,22 @@ export namespace Prisma {
    * Fields of the processedEvents model
    */
   interface processedEventsFieldRefs {
-    readonly id: FieldRef<"processedEvents", 'String'>
+    readonly id: FieldRef<"processedEvents", 'Int'>
+    readonly eventID: FieldRef<"processedEvents", 'String'>
     readonly createdAt: FieldRef<"processedEvents", 'DateTime'>
     readonly processedAt: FieldRef<"processedEvents", 'DateTime'>
-    readonly slaTime: FieldRef<"processedEvents", 'DateTime'>
-    readonly complianceSlatime: FieldRef<"processedEvents", 'Boolean'>
-    readonly Operator: FieldRef<"processedEvents", 'String'>
-    readonly operatorJustify: FieldRef<"processedEvents", 'String'>
-    readonly operatorComment: FieldRef<"processedEvents", 'String'>
-    readonly accoundId: FieldRef<"processedEvents", 'String'>
+    readonly operator: FieldRef<"processedEvents", 'String'>
+    readonly operatorNotes: FieldRef<"processedEvents", 'String'>
+    readonly accountId: FieldRef<"processedEvents", 'String'>
     readonly code: FieldRef<"processedEvents", 'String'>
-    readonly accuntObservation: FieldRef<"processedEvents", 'String'>
+    readonly accountObservation: FieldRef<"processedEvents", 'String'>
+    readonly evaluacionLlamada: FieldRef<"processedEvents", 'String'>
+    readonly cumplimientoProtocolo: FieldRef<"processedEvents", 'String'>
+    readonly esFaltaRecurrente: FieldRef<"processedEvents", 'Boolean'>
+    readonly cumpleSLA: FieldRef<"processedEvents", 'Boolean'>
+    readonly puntuacionLlamada: FieldRef<"processedEvents", 'Int'>
+    readonly evaluacionQA: FieldRef<"processedEvents", 'Int'>
+    readonly accionRecomendada: FieldRef<"processedEvents", 'String'>
   }
     
 
@@ -1946,16 +2053,21 @@ export namespace Prisma {
 
   export const ProcessedEventsScalarFieldEnum: {
     id: 'id',
+    eventID: 'eventID',
     createdAt: 'createdAt',
     processedAt: 'processedAt',
-    slaTime: 'slaTime',
-    complianceSlatime: 'complianceSlatime',
-    Operator: 'Operator',
-    operatorJustify: 'operatorJustify',
-    operatorComment: 'operatorComment',
-    accoundId: 'accoundId',
+    operator: 'operator',
+    operatorNotes: 'operatorNotes',
+    accountId: 'accountId',
     code: 'code',
-    accuntObservation: 'accuntObservation'
+    accountObservation: 'accountObservation',
+    evaluacionLlamada: 'evaluacionLlamada',
+    cumplimientoProtocolo: 'cumplimientoProtocolo',
+    esFaltaRecurrente: 'esFaltaRecurrente',
+    cumpleSLA: 'cumpleSLA',
+    puntuacionLlamada: 'puntuacionLlamada',
+    evaluacionQA: 'evaluacionQA',
+    accionRecomendada: 'accionRecomendada'
   };
 
   export type ProcessedEventsScalarFieldEnum = (typeof ProcessedEventsScalarFieldEnum)[keyof typeof ProcessedEventsScalarFieldEnum]
@@ -1969,9 +2081,24 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
   /**
    * Field references
    */
+
+
+  /**
+   * Reference to a field of type 'Int'
+   */
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
 
 
   /**
@@ -1996,9 +2123,9 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Int'
+   * Reference to a field of type 'Float'
    */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
     
   /**
    * Deep Input Types
@@ -2009,180 +2136,250 @@ export namespace Prisma {
     AND?: processedEventsWhereInput | processedEventsWhereInput[]
     OR?: processedEventsWhereInput[]
     NOT?: processedEventsWhereInput | processedEventsWhereInput[]
-    id?: StringFilter<"processedEvents"> | string
+    id?: IntFilter<"processedEvents"> | number
+    eventID?: StringFilter<"processedEvents"> | string
     createdAt?: DateTimeFilter<"processedEvents"> | Date | string
     processedAt?: DateTimeFilter<"processedEvents"> | Date | string
-    slaTime?: DateTimeFilter<"processedEvents"> | Date | string
-    complianceSlatime?: BoolFilter<"processedEvents"> | boolean
-    Operator?: StringFilter<"processedEvents"> | string
-    operatorJustify?: StringFilter<"processedEvents"> | string
-    operatorComment?: StringFilter<"processedEvents"> | string
-    accoundId?: StringFilter<"processedEvents"> | string
+    operator?: StringFilter<"processedEvents"> | string
+    operatorNotes?: StringNullableFilter<"processedEvents"> | string | null
+    accountId?: StringFilter<"processedEvents"> | string
     code?: StringFilter<"processedEvents"> | string
-    accuntObservation?: StringFilter<"processedEvents"> | string
+    accountObservation?: StringNullableFilter<"processedEvents"> | string | null
+    evaluacionLlamada?: StringFilter<"processedEvents"> | string
+    cumplimientoProtocolo?: StringFilter<"processedEvents"> | string
+    esFaltaRecurrente?: BoolFilter<"processedEvents"> | boolean
+    cumpleSLA?: BoolFilter<"processedEvents"> | boolean
+    puntuacionLlamada?: IntFilter<"processedEvents"> | number
+    evaluacionQA?: IntFilter<"processedEvents"> | number
+    accionRecomendada?: StringFilter<"processedEvents"> | string
   }
 
   export type processedEventsOrderByWithRelationInput = {
     id?: SortOrder
+    eventID?: SortOrder
     createdAt?: SortOrder
     processedAt?: SortOrder
-    slaTime?: SortOrder
-    complianceSlatime?: SortOrder
-    Operator?: SortOrder
-    operatorJustify?: SortOrder
-    operatorComment?: SortOrder
-    accoundId?: SortOrder
+    operator?: SortOrder
+    operatorNotes?: SortOrderInput | SortOrder
+    accountId?: SortOrder
     code?: SortOrder
-    accuntObservation?: SortOrder
+    accountObservation?: SortOrderInput | SortOrder
+    evaluacionLlamada?: SortOrder
+    cumplimientoProtocolo?: SortOrder
+    esFaltaRecurrente?: SortOrder
+    cumpleSLA?: SortOrder
+    puntuacionLlamada?: SortOrder
+    evaluacionQA?: SortOrder
+    accionRecomendada?: SortOrder
   }
 
   export type processedEventsWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
+    id?: number
     AND?: processedEventsWhereInput | processedEventsWhereInput[]
     OR?: processedEventsWhereInput[]
     NOT?: processedEventsWhereInput | processedEventsWhereInput[]
+    eventID?: StringFilter<"processedEvents"> | string
     createdAt?: DateTimeFilter<"processedEvents"> | Date | string
     processedAt?: DateTimeFilter<"processedEvents"> | Date | string
-    slaTime?: DateTimeFilter<"processedEvents"> | Date | string
-    complianceSlatime?: BoolFilter<"processedEvents"> | boolean
-    Operator?: StringFilter<"processedEvents"> | string
-    operatorJustify?: StringFilter<"processedEvents"> | string
-    operatorComment?: StringFilter<"processedEvents"> | string
-    accoundId?: StringFilter<"processedEvents"> | string
+    operator?: StringFilter<"processedEvents"> | string
+    operatorNotes?: StringNullableFilter<"processedEvents"> | string | null
+    accountId?: StringFilter<"processedEvents"> | string
     code?: StringFilter<"processedEvents"> | string
-    accuntObservation?: StringFilter<"processedEvents"> | string
+    accountObservation?: StringNullableFilter<"processedEvents"> | string | null
+    evaluacionLlamada?: StringFilter<"processedEvents"> | string
+    cumplimientoProtocolo?: StringFilter<"processedEvents"> | string
+    esFaltaRecurrente?: BoolFilter<"processedEvents"> | boolean
+    cumpleSLA?: BoolFilter<"processedEvents"> | boolean
+    puntuacionLlamada?: IntFilter<"processedEvents"> | number
+    evaluacionQA?: IntFilter<"processedEvents"> | number
+    accionRecomendada?: StringFilter<"processedEvents"> | string
   }, "id">
 
   export type processedEventsOrderByWithAggregationInput = {
     id?: SortOrder
+    eventID?: SortOrder
     createdAt?: SortOrder
     processedAt?: SortOrder
-    slaTime?: SortOrder
-    complianceSlatime?: SortOrder
-    Operator?: SortOrder
-    operatorJustify?: SortOrder
-    operatorComment?: SortOrder
-    accoundId?: SortOrder
+    operator?: SortOrder
+    operatorNotes?: SortOrderInput | SortOrder
+    accountId?: SortOrder
     code?: SortOrder
-    accuntObservation?: SortOrder
+    accountObservation?: SortOrderInput | SortOrder
+    evaluacionLlamada?: SortOrder
+    cumplimientoProtocolo?: SortOrder
+    esFaltaRecurrente?: SortOrder
+    cumpleSLA?: SortOrder
+    puntuacionLlamada?: SortOrder
+    evaluacionQA?: SortOrder
+    accionRecomendada?: SortOrder
     _count?: processedEventsCountOrderByAggregateInput
+    _avg?: processedEventsAvgOrderByAggregateInput
     _max?: processedEventsMaxOrderByAggregateInput
     _min?: processedEventsMinOrderByAggregateInput
+    _sum?: processedEventsSumOrderByAggregateInput
   }
 
   export type processedEventsScalarWhereWithAggregatesInput = {
     AND?: processedEventsScalarWhereWithAggregatesInput | processedEventsScalarWhereWithAggregatesInput[]
     OR?: processedEventsScalarWhereWithAggregatesInput[]
     NOT?: processedEventsScalarWhereWithAggregatesInput | processedEventsScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"processedEvents"> | string
+    id?: IntWithAggregatesFilter<"processedEvents"> | number
+    eventID?: StringWithAggregatesFilter<"processedEvents"> | string
     createdAt?: DateTimeWithAggregatesFilter<"processedEvents"> | Date | string
     processedAt?: DateTimeWithAggregatesFilter<"processedEvents"> | Date | string
-    slaTime?: DateTimeWithAggregatesFilter<"processedEvents"> | Date | string
-    complianceSlatime?: BoolWithAggregatesFilter<"processedEvents"> | boolean
-    Operator?: StringWithAggregatesFilter<"processedEvents"> | string
-    operatorJustify?: StringWithAggregatesFilter<"processedEvents"> | string
-    operatorComment?: StringWithAggregatesFilter<"processedEvents"> | string
-    accoundId?: StringWithAggregatesFilter<"processedEvents"> | string
+    operator?: StringWithAggregatesFilter<"processedEvents"> | string
+    operatorNotes?: StringNullableWithAggregatesFilter<"processedEvents"> | string | null
+    accountId?: StringWithAggregatesFilter<"processedEvents"> | string
     code?: StringWithAggregatesFilter<"processedEvents"> | string
-    accuntObservation?: StringWithAggregatesFilter<"processedEvents"> | string
+    accountObservation?: StringNullableWithAggregatesFilter<"processedEvents"> | string | null
+    evaluacionLlamada?: StringWithAggregatesFilter<"processedEvents"> | string
+    cumplimientoProtocolo?: StringWithAggregatesFilter<"processedEvents"> | string
+    esFaltaRecurrente?: BoolWithAggregatesFilter<"processedEvents"> | boolean
+    cumpleSLA?: BoolWithAggregatesFilter<"processedEvents"> | boolean
+    puntuacionLlamada?: IntWithAggregatesFilter<"processedEvents"> | number
+    evaluacionQA?: IntWithAggregatesFilter<"processedEvents"> | number
+    accionRecomendada?: StringWithAggregatesFilter<"processedEvents"> | string
   }
 
   export type processedEventsCreateInput = {
-    id: string
+    eventID: string
     createdAt: Date | string
     processedAt: Date | string
-    slaTime: Date | string
-    complianceSlatime: boolean
-    Operator: string
-    operatorJustify: string
-    operatorComment: string
-    accoundId: string
+    operator: string
+    operatorNotes?: string | null
+    accountId: string
     code: string
-    accuntObservation: string
+    accountObservation?: string | null
+    evaluacionLlamada: string
+    cumplimientoProtocolo: string
+    esFaltaRecurrente: boolean
+    cumpleSLA: boolean
+    puntuacionLlamada: number
+    evaluacionQA: number
+    accionRecomendada: string
   }
 
   export type processedEventsUncheckedCreateInput = {
-    id: string
+    id?: number
+    eventID: string
     createdAt: Date | string
     processedAt: Date | string
-    slaTime: Date | string
-    complianceSlatime: boolean
-    Operator: string
-    operatorJustify: string
-    operatorComment: string
-    accoundId: string
+    operator: string
+    operatorNotes?: string | null
+    accountId: string
     code: string
-    accuntObservation: string
+    accountObservation?: string | null
+    evaluacionLlamada: string
+    cumplimientoProtocolo: string
+    esFaltaRecurrente: boolean
+    cumpleSLA: boolean
+    puntuacionLlamada: number
+    evaluacionQA: number
+    accionRecomendada: string
   }
 
   export type processedEventsUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    eventID?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     processedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    slaTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    complianceSlatime?: BoolFieldUpdateOperationsInput | boolean
-    Operator?: StringFieldUpdateOperationsInput | string
-    operatorJustify?: StringFieldUpdateOperationsInput | string
-    operatorComment?: StringFieldUpdateOperationsInput | string
-    accoundId?: StringFieldUpdateOperationsInput | string
+    operator?: StringFieldUpdateOperationsInput | string
+    operatorNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    accountId?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
-    accuntObservation?: StringFieldUpdateOperationsInput | string
+    accountObservation?: NullableStringFieldUpdateOperationsInput | string | null
+    evaluacionLlamada?: StringFieldUpdateOperationsInput | string
+    cumplimientoProtocolo?: StringFieldUpdateOperationsInput | string
+    esFaltaRecurrente?: BoolFieldUpdateOperationsInput | boolean
+    cumpleSLA?: BoolFieldUpdateOperationsInput | boolean
+    puntuacionLlamada?: IntFieldUpdateOperationsInput | number
+    evaluacionQA?: IntFieldUpdateOperationsInput | number
+    accionRecomendada?: StringFieldUpdateOperationsInput | string
   }
 
   export type processedEventsUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
+    eventID?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     processedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    slaTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    complianceSlatime?: BoolFieldUpdateOperationsInput | boolean
-    Operator?: StringFieldUpdateOperationsInput | string
-    operatorJustify?: StringFieldUpdateOperationsInput | string
-    operatorComment?: StringFieldUpdateOperationsInput | string
-    accoundId?: StringFieldUpdateOperationsInput | string
+    operator?: StringFieldUpdateOperationsInput | string
+    operatorNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    accountId?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
-    accuntObservation?: StringFieldUpdateOperationsInput | string
+    accountObservation?: NullableStringFieldUpdateOperationsInput | string | null
+    evaluacionLlamada?: StringFieldUpdateOperationsInput | string
+    cumplimientoProtocolo?: StringFieldUpdateOperationsInput | string
+    esFaltaRecurrente?: BoolFieldUpdateOperationsInput | boolean
+    cumpleSLA?: BoolFieldUpdateOperationsInput | boolean
+    puntuacionLlamada?: IntFieldUpdateOperationsInput | number
+    evaluacionQA?: IntFieldUpdateOperationsInput | number
+    accionRecomendada?: StringFieldUpdateOperationsInput | string
   }
 
   export type processedEventsCreateManyInput = {
-    id: string
+    id?: number
+    eventID: string
     createdAt: Date | string
     processedAt: Date | string
-    slaTime: Date | string
-    complianceSlatime: boolean
-    Operator: string
-    operatorJustify: string
-    operatorComment: string
-    accoundId: string
+    operator: string
+    operatorNotes?: string | null
+    accountId: string
     code: string
-    accuntObservation: string
+    accountObservation?: string | null
+    evaluacionLlamada: string
+    cumplimientoProtocolo: string
+    esFaltaRecurrente: boolean
+    cumpleSLA: boolean
+    puntuacionLlamada: number
+    evaluacionQA: number
+    accionRecomendada: string
   }
 
   export type processedEventsUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    eventID?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     processedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    slaTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    complianceSlatime?: BoolFieldUpdateOperationsInput | boolean
-    Operator?: StringFieldUpdateOperationsInput | string
-    operatorJustify?: StringFieldUpdateOperationsInput | string
-    operatorComment?: StringFieldUpdateOperationsInput | string
-    accoundId?: StringFieldUpdateOperationsInput | string
+    operator?: StringFieldUpdateOperationsInput | string
+    operatorNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    accountId?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
-    accuntObservation?: StringFieldUpdateOperationsInput | string
+    accountObservation?: NullableStringFieldUpdateOperationsInput | string | null
+    evaluacionLlamada?: StringFieldUpdateOperationsInput | string
+    cumplimientoProtocolo?: StringFieldUpdateOperationsInput | string
+    esFaltaRecurrente?: BoolFieldUpdateOperationsInput | boolean
+    cumpleSLA?: BoolFieldUpdateOperationsInput | boolean
+    puntuacionLlamada?: IntFieldUpdateOperationsInput | number
+    evaluacionQA?: IntFieldUpdateOperationsInput | number
+    accionRecomendada?: StringFieldUpdateOperationsInput | string
   }
 
   export type processedEventsUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
+    eventID?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     processedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    slaTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    complianceSlatime?: BoolFieldUpdateOperationsInput | boolean
-    Operator?: StringFieldUpdateOperationsInput | string
-    operatorJustify?: StringFieldUpdateOperationsInput | string
-    operatorComment?: StringFieldUpdateOperationsInput | string
-    accoundId?: StringFieldUpdateOperationsInput | string
+    operator?: StringFieldUpdateOperationsInput | string
+    operatorNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    accountId?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
-    accuntObservation?: StringFieldUpdateOperationsInput | string
+    accountObservation?: NullableStringFieldUpdateOperationsInput | string | null
+    evaluacionLlamada?: StringFieldUpdateOperationsInput | string
+    cumplimientoProtocolo?: StringFieldUpdateOperationsInput | string
+    esFaltaRecurrente?: BoolFieldUpdateOperationsInput | boolean
+    cumpleSLA?: BoolFieldUpdateOperationsInput | boolean
+    puntuacionLlamada?: IntFieldUpdateOperationsInput | number
+    evaluacionQA?: IntFieldUpdateOperationsInput | number
+    accionRecomendada?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -2210,51 +2407,113 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type BoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type processedEventsCountOrderByAggregateInput = {
     id?: SortOrder
+    eventID?: SortOrder
     createdAt?: SortOrder
     processedAt?: SortOrder
-    slaTime?: SortOrder
-    complianceSlatime?: SortOrder
-    Operator?: SortOrder
-    operatorJustify?: SortOrder
-    operatorComment?: SortOrder
-    accoundId?: SortOrder
+    operator?: SortOrder
+    operatorNotes?: SortOrder
+    accountId?: SortOrder
     code?: SortOrder
-    accuntObservation?: SortOrder
+    accountObservation?: SortOrder
+    evaluacionLlamada?: SortOrder
+    cumplimientoProtocolo?: SortOrder
+    esFaltaRecurrente?: SortOrder
+    cumpleSLA?: SortOrder
+    puntuacionLlamada?: SortOrder
+    evaluacionQA?: SortOrder
+    accionRecomendada?: SortOrder
+  }
+
+  export type processedEventsAvgOrderByAggregateInput = {
+    id?: SortOrder
+    puntuacionLlamada?: SortOrder
+    evaluacionQA?: SortOrder
   }
 
   export type processedEventsMaxOrderByAggregateInput = {
     id?: SortOrder
+    eventID?: SortOrder
     createdAt?: SortOrder
     processedAt?: SortOrder
-    slaTime?: SortOrder
-    complianceSlatime?: SortOrder
-    Operator?: SortOrder
-    operatorJustify?: SortOrder
-    operatorComment?: SortOrder
-    accoundId?: SortOrder
+    operator?: SortOrder
+    operatorNotes?: SortOrder
+    accountId?: SortOrder
     code?: SortOrder
-    accuntObservation?: SortOrder
+    accountObservation?: SortOrder
+    evaluacionLlamada?: SortOrder
+    cumplimientoProtocolo?: SortOrder
+    esFaltaRecurrente?: SortOrder
+    cumpleSLA?: SortOrder
+    puntuacionLlamada?: SortOrder
+    evaluacionQA?: SortOrder
+    accionRecomendada?: SortOrder
   }
 
   export type processedEventsMinOrderByAggregateInput = {
     id?: SortOrder
+    eventID?: SortOrder
     createdAt?: SortOrder
     processedAt?: SortOrder
-    slaTime?: SortOrder
-    complianceSlatime?: SortOrder
-    Operator?: SortOrder
-    operatorJustify?: SortOrder
-    operatorComment?: SortOrder
-    accoundId?: SortOrder
+    operator?: SortOrder
+    operatorNotes?: SortOrder
+    accountId?: SortOrder
     code?: SortOrder
-    accuntObservation?: SortOrder
+    accountObservation?: SortOrder
+    evaluacionLlamada?: SortOrder
+    cumplimientoProtocolo?: SortOrder
+    esFaltaRecurrente?: SortOrder
+    cumpleSLA?: SortOrder
+    puntuacionLlamada?: SortOrder
+    evaluacionQA?: SortOrder
+    accionRecomendada?: SortOrder
+  }
+
+  export type processedEventsSumOrderByAggregateInput = {
+    id?: SortOrder
+    puntuacionLlamada?: SortOrder
+    evaluacionQA?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -2288,6 +2547,23 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
   export type BoolWithAggregatesFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
@@ -2304,8 +2580,31 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -2333,9 +2632,50 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type NestedBoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -2355,17 +2695,6 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[]
@@ -2378,6 +2707,34 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {

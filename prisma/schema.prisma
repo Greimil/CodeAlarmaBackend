@@ -1,6 +1,12 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+
+// Commandos para actualizar la BBDD 
+// npx prisma migrate dev -- name (crea la migracion)
+// npx prisma generate (sincroniza la base de datos con el modelo)
+
+
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
@@ -11,35 +17,17 @@ datasource db {
 }
 
 
-// export interface EventEvaluated {
-//   id: string;
-//   createdAt: string;
-//   processedAt: string;
-//   operator?: string;
-//   operatorNotes?: string;
-//   accountId: string;
-//   code: string; 
-//   accountObservation?: string;
-//   evaluacionLlamada?: string;
-//   cumplimientoProtocolo?: "Cumple protocolo" | "Cumplimiento parcial" | "Incumple protocolo";
-//   esFaltaRecurrente?: boolean;
-//   cumpleSLA?: boolean; 
-//   puntuacionLlamada?: number; 
-//   evaluacionQA?: number; 
-//   accionRecomendada?: "Ninguna" | "Capacitación" | "Amonestación verbal" | "Amonestación escrita" | "Investigación";
-//   conclusion?: string
-// }
-
 
 model processedEvents {
-  id String @id
+  id Int @id @default(autoincrement())
+  eventID String 
   createdAt DateTime
   processedAt DateTime
   operator String
-  operatorNotes String
+  operatorNotes String?
   accountId String 
   code String 
-  accountObservation String
+  accountObservation String?
   evaluacionLlamada String
   cumplimientoProtocolo String
   esFaltaRecurrente Boolean
@@ -47,5 +35,5 @@ model processedEvents {
   puntuacionLlamada Int
   evaluacionQA Int
   accionRecomendada String
-  conclusion String
+  // callTranscription 
 }

@@ -91,21 +91,31 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.ProcessedEventsScalarFieldEnum = {
   id: 'id',
+  eventID: 'eventID',
   createdAt: 'createdAt',
   processedAt: 'processedAt',
-  slaTime: 'slaTime',
-  complianceSlatime: 'complianceSlatime',
-  Operator: 'Operator',
-  operatorJustify: 'operatorJustify',
-  operatorComment: 'operatorComment',
-  accoundId: 'accoundId',
+  operator: 'operator',
+  operatorNotes: 'operatorNotes',
+  accountId: 'accountId',
   code: 'code',
-  accuntObservation: 'accuntObservation'
+  accountObservation: 'accountObservation',
+  evaluacionLlamada: 'evaluacionLlamada',
+  cumplimientoProtocolo: 'cumplimientoProtocolo',
+  esFaltaRecurrente: 'esFaltaRecurrente',
+  cumpleSLA: 'cumpleSLA',
+  puntuacionLlamada: 'puntuacionLlamada',
+  evaluacionQA: 'evaluacionQA',
+  accionRecomendada: 'accionRecomendada'
 };
 
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
 };
 
 
@@ -120,10 +130,10 @@ const config = {
   "clientVersion": "7.1.0",
   "engineVersion": "ab635e6b9d606fa5c8fb8b1a7f909c3c3c1c98ba",
   "activeProvider": "sqlite",
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n}\n\nmodel processedEvents {\n  id                String   @id\n  createdAt         DateTime\n  processedAt       DateTime\n  slaTime           DateTime\n  complianceSlatime Boolean\n  Operator          String\n  operatorJustify   String\n  operatorComment   String\n  accoundId         String\n  code              String\n  accuntObservation String\n}\n"
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n}\n\n// export interface EventEvaluated {\n//   id: string;\n//   createdAt: string;\n//   processedAt: string;\n//   operator?: string;\n//   operatorNotes?: string;\n//   accountId: string;\n//   code: string; \n//   accountObservation?: string;\n//   evaluacionLlamada?: string;\n//   cumplimientoProtocolo?: \"Cumple protocolo\" | \"Cumplimiento parcial\" | \"Incumple protocolo\";\n//   esFaltaRecurrente?: boolean;\n//   cumpleSLA?: boolean; \n//   puntuacionLlamada?: number; \n//   evaluacionQA?: number; \n//   accionRecomendada?: \"Ninguna\" | \"Capacitación\" | \"Amonestación verbal\" | \"Amonestación escrita\" | \"Investigación\";\n//   conclusion?: string\n// }\n\nmodel processedEvents {\n  id                    Int      @id @default(autoincrement())\n  eventID               String\n  createdAt             DateTime\n  processedAt           DateTime\n  operator              String\n  operatorNotes         String?\n  accountId             String\n  code                  String\n  accountObservation    String?\n  evaluacionLlamada     String\n  cumplimientoProtocolo String\n  esFaltaRecurrente     Boolean\n  cumpleSLA             Boolean\n  puntuacionLlamada     Int\n  evaluacionQA          Int\n  accionRecomendada     String\n}\n"
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"processedEvents\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"processedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"slaTime\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"complianceSlatime\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"Operator\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"operatorJustify\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"operatorComment\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"accoundId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"code\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"accuntObservation\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"processedEvents\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"eventID\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"processedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"operator\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"operatorNotes\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"accountId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"code\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"accountObservation\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"evaluacionLlamada\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"cumplimientoProtocolo\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"esFaltaRecurrente\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"cumpleSLA\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"puntuacionLlamada\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"evaluacionQA\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"accionRecomendada\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.compilerWasm = {
   getRuntime: async () => require('./query_compiler_bg.js'),

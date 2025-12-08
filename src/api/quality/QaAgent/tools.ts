@@ -19,7 +19,6 @@ const data = JSON.parse(await fs.readFile(dataPath, "utf8"));
 
 console.log(`📚 Cargando ${data.docs.length} chunks...`);
 
-// 2. Recrear vectorstore en memoria
 const embeddings = new OpenAIEmbeddings();
 const vectorStore = new MemoryVectorStore(embeddings);
 
@@ -34,7 +33,7 @@ const docs = data.docs.map(
 await vectorStore.addDocuments(docs);
 const retriever = vectorStore.asRetriever({ k: 4 });
 
-// 3. Herramienta de búsqueda
+
 export const searchPDF = tool(
   async ({ query }) => {
     const results = await retriever.invoke(query);

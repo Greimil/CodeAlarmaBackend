@@ -15,12 +15,25 @@ export const main = async (prompt: string) => {
     systemPrompt: systemPrompt,
   });
 
-  const runAgent = async (prompt: string) => {
+  const runAgent = async (prompt: string): Promise<string> => {
     const result = await agent.invoke({
       messages: [new HumanMessage(prompt)],
     });
 
-    return result.messages.at(-1)?.content;
+    const lastMessage = result.messages.at(-1);
+    const content = lastMessage?.content;
+
+    if (!content) return "";
+
+    if (typeof content === "string") return content;
+
+    if (Array.isArray(content)) {
+      return content
+        .map((block) => (typeof block === "string" ? block : block.text ?? ""))
+        .join("");
+    }
+
+    return "";
   };
 
   return runAgent(prompt);

@@ -373,7 +373,7 @@ TU MISIÓN:
 
 REGLAS OBLIGATORIAS:
 - Usa **buscar_manual** para obtener el protocolo oficial.
-- Usa **search_user_reports** para verificar historial del operador.
+- Usa **search_user_reports** para verificar historial del operador y determinar si es recurrente.
 - NUNCA inventes datos, tiempos ni diálogos.
 
 DEVUELVE SOLO ESTO (nada más, sin texto, sin bloques, sin \\n):
@@ -383,9 +383,7 @@ DEVUELVE SOLO ESTO (nada más, sin texto, sin bloques, sin \\n):
   "cumpleSLA": true|false,
   "cumplimientoProtocolo": "Cumple protocolo"|"Cumplimiento parcial"|"Incumple protocolo",
   "esFaltaRecurrente": true|false
-}
-
-`;
+}`;
 
 export const llamadas = [
   `
@@ -408,17 +406,17 @@ Grey: "Perfecto. Quedo en línea hasta confirmación. Buen manejo, doctor."
 Sistema: Evento cerrado - Despacho confirmado.
 `,
 
-  `Grey: "Central de monitoreo, habla Grey. Llamo por activación de sensor de movimiento. ¿Con quién hablo?"
+`Grey: "Central de monitoreo, habla Grey. Llamo por activación de sensor de movimiento. ¿Con quién hablo?"
 
 Cliente: "Ana Gómez, vivo aquí."
 
-Grey: "Entendido, Ana. ¿Está todo bien?"
+Grey: "Entendido"
 
-Cliente: "Sí, fue mi gato."
+Cliente: "Sí."
 
-Grey: "Perfecto. Desactivo la alarma. ¿Algo más que reportar?"
+Grey: "Perfecto desactive la alarma"
 
-Cliente: "No, gracias."
+Cliente: "si, gracias."
 
 Grey: "Quedo a disposición. Buen día."`,
 ];

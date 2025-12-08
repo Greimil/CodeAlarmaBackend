@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch ./src/server.ts",
+    "debug": "NODE_OPTIONS='--inspect' tsx watch ./src/server.ts",
     "create-vectorialDb": "npx tsx ./src/api/quality/QaAgent/crea-db.ts"
   },
   "keywords": [],

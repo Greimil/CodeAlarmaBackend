@@ -3,7 +3,7 @@ import {
   type EventEvaluated,
   type ApiResponse,
 } from "../types";
-import { fetchEvents } from "../api/quality/quality.services";
+import { fetchEvents, searchDatabase } from "../api/quality/quality.services";
 import { differenceInMinutes, format, formatDate, parseISO } from "date-fns";
 import { es } from "date-fns/locale";
 
@@ -11,23 +11,27 @@ export const filterEventsMiddleware = async (
   req: any,
   res: any,
   next: () => void
-): Promise<any> => {
+) => {
   try {
     let { rows }: ApiResponse = await fetchEvents();
     let now = new Date();
-    let res: EventEvaluated[] = [];
+    let filteredEvents: EventEvaluated[] = [];
 
-    rows.map((evento: EventoPendiente) => {
-      let createdAtEventDate = parseISODate(evento.rec_isoFechaRecepcion);
+    await Promise.all(
+      rows.map(async (evento: EventoPendiente) => {
+        let createdAtEventDate = parseISODate(evento.rec_isoFechaRecepcion);
 
-      if (createdAtEventDate) {
+        if (!createdAtEventDate) return;
+
         const minutesDifference = Math.abs(
           differenceInMinutes(now, createdAtEventDate)
         );
 
-        if (minutesDifference < 60) {
-          res.push({
-            id: evento.Id,
+        const exists = await searchDatabase(evento);
+
+        if (minutesDifference < 60 && exists) {
+          filteredEvents.push({
+            eventID: evento.Id,
             operator: evento.operadorAtendiendoCuenta || "Grey",
             createdAt: format(
               createdAtEventDate,
@@ -44,12 +48,18 @@ export const filterEventsMiddleware = async (
             operatorNotes: evento.rec_cObservaciones,
           });
         }
-      }
-    });
+      })
+    );
 
-    req.filteredEvents = res;
-    next();
+    req.filteredEvents = filteredEvents;
+
+    if (filteredEvents.length == 0) {
+      res.json("No new Events");
+    } else {
+      next();
+    }
   } catch (err) {
+    console.error(err);
     throw err;
   }
 };
