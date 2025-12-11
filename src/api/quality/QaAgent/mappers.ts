@@ -17,8 +17,8 @@ const parseSpanishDate = (dateStr: string): Date => {
 export const toPrismaProcessedEvent = (event: EventEvaluated): Prisma.processedEventsCreateManyInput => {
   return {
     eventID: event.eventID,
-    createdAt: parseSpanishDate(event.createdAt),
-    processedAt: parseSpanishDate(event.processedAt),
+    createdAt: event.createdAt,
+    processedAt: event.processedAt,
     operator: event.operator ?? "Sistema",
     operatorNotes: event.operatorNotes ?? null,
     accountId: event.accountId,

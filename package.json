@@ -4,7 +4,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest run",
+    "test:watch": "vitest watch",
+    "test:coverage": "vitest run --coverage",
     "dev": "tsx watch ./src/server.ts",
     "debug": "NODE_OPTIONS='--inspect' tsx watch ./src/server.ts",
     "create-vectorialDb": "npx tsx ./src/api/quality/QaAgent/crea-db.ts"
@@ -17,9 +19,11 @@
     "@types/better-sqlite3": "^7.6.13",
     "@types/express": "^5.0.6",
     "@types/node": "^24.10.1",
+    "@vitest/coverage-v8": "^4.0.15",
     "prisma": "^7.1.0",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.15"
   },
   "dependencies": {
     "@langchain/community": "^1.0.7",

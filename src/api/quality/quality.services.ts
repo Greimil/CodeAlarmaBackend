@@ -1,5 +1,5 @@
 import { differenceInMinutes, format, formatDate, parseISO } from "date-fns";
-import { es } from "date-fns/locale";
+import { da, es } from "date-fns/locale";
 import { toPrismaProcessedEvent } from "./QaAgent/mappers";
 import {
   type ApiResponse,
@@ -11,6 +11,7 @@ import { prisma } from "@/lib/prisma";
 import { llamadas } from "./QaAgent/systemPrompt";
 import { main } from "./QaAgent/QaAgent";
 import type { Prisma } from "@/generated/prisma";
+import type { EventoProcesadoResponseDTO } from "./dto/eventosProcesados.dto";
 
 const URL =
   "https://codealarma.net/rest/Search/ReporteHistorico?OrdenarFecha=DESC&Estados=3&page=1&start=0&limit=100&Cuentas=0";
@@ -153,19 +154,66 @@ export const createOperatorReports = async (
   }
 };
 
-// export const createOperatorReport = async (EventEvaluated: EventEvaluated) => {
-//   try {
-//     let transforEvent = toPrismaProcessedEvent(EventEvaluated);
 
-//     const record = await prisma.processedEvents.create({
-//       data: transforEvent,
-//     });
 
-//     return record;
-//   } catch (err) {
-//     throw err;
-//   }
-// };
+export const filterEventsDb = async (
+  data: EventoProcesadoResponseDTO[]
+): Promise<EventoProcesadoResponseDTO[]> => {
+  try {
+    if (!data || data.length === 0) {
+      return [];
+    }
+
+    const eventKeys = data
+      .filter((event) => event.eventID && event.accountId)
+      .map((event) => ({
+        eventID: event.eventID,
+        accountId: event.accountId,
+      }));
+
+    if (eventKeys.length === 0) {
+      return data;
+    }
+
+    
+    const EventsFoundInDb = await prisma.processedEvents.findMany({
+      where: {
+        OR: eventKeys.map((key) => ({
+          AND: [
+            { eventID: key.eventID },
+            { accountId: key.accountId },
+          ],
+        })),
+      },
+      select: {
+        eventID: true,
+        accountId: true,
+      },
+    });
+
+   
+    const existingKeys = new Set(
+      EventsFoundInDb.map(
+        (event) => `${event.eventID}|${event.accountId}`
+      )
+    );
+
+    
+    const filteredEvents = data.filter((event) => {
+      if (!event.eventID || !event.accountId) {
+        return false;
+      }
+      const key = `${event.eventID}|${event.accountId}`;
+      return !existingKeys.has(key);
+    });
+
+    return filteredEvents;
+  } catch (err) {
+    console.error("Error en filterEventsDb:", err);
+    throw err;
+  }
+};
+
 
 export const searchDatabase = async (
   event: EventoProcesado
@@ -185,121 +233,63 @@ export const searchDatabase = async (
 };
 
 
+
+
+
 export const groupEvents = (
- data: Partial<EventoProcesado>[],
- windowMinutes: number = 5
-): EventoProcesado[] => {
- const seen = new Map<string, EventoProcesado[]>();
+  data: EventoProcesadoResponseDTO[],
+  windowMinutes: number = 5
+): EventoProcesadoResponseDTO[] => {
+  const seen = new Map<string, EventoProcesadoResponseDTO[]>();
 
+  const clean = (v: string | undefined) =>
+    v ? v.replace(/\s+/g, " ").trim() : "";
 
- // Función de limpieza auxiliar para eliminar cualquier espacio innecesario, incluyendo
- // retornos de carro internos o espacios finales de la base de datos.
- const cleanString = (value: string | undefined): string => {
-   if (value === undefined || value === null) return "";
-   // 1. Reemplaza cualquier carácter no visible (como \r, \t, etc.) dentro de la cadena con un espacio simple.
-   // 2. Luego usa trim() para eliminar espacios/retornos de carro al inicio/final.
-   // 3. Normaliza espacios múltiples a un solo espacio.
-   return value.replace(/\s+/g, " ").trim();
- };
+  for (const event of data) {
+    const clientId = clean(event.accountId);
+    const code = clean(event.code);
+    const status = clean(event.status);
+    const zone = clean(event.zone);
+    const obs = clean(event.accountObservation);
 
+    if (!clientId || !code || !status || !zone) continue;
 
- for (const event of data) {
-  
+    const eventTime = event.createdAt;
+    if (!eventTime) continue;
 
+    const baseKey = `${clientId}|${code}|${status}|${zone}|${obs}`;
 
-   const rawClientId = event.cue_ncuenta ?? event.rec_iid;
-   const clientId = cleanString(rawClientId);
-   if (!clientId) continue;
+    let matched = false;
 
+    for (const [key, group] of seen) {
+      if (!key.startsWith(baseKey + "|")) continue;
 
+      const storedTimeStr = key.split("|").pop();
+      const storedTime = storedTimeStr ? new Date(storedTimeStr) : null;
+      if (!storedTime) continue;
 
-   const rawEventType = event.rec_calarma ?? event.cod_cdescripcion;
-   const eventType = cleanString(rawEventType);
-   if (!eventType) continue;
+      const diff = Math.abs(differenceInMinutes(eventTime, storedTime));
+      if (diff <= windowMinutes) {
+        group.push(event);
+        matched = true;
+        break;
+      }
+    }
 
-
-   const eventStatus = cleanString(
-     event.rec_nestado ?? event.rec_idResolucion
-   );
-   if (!eventStatus) continue; 
-
-
-   const rawZona = event.rec_czona ?? event.zonas_ccodigo;
-   const zona = cleanString(rawZona);
-   if (!zona) continue;
-
-
-
-   const rawObservaciones = event.rec_cObservaciones;
-   const observaciones = cleanString(rawObservaciones);
-
-
-   const baseKey = `${clientId}|${eventType}|${eventStatus}|${zona}|${observaciones}`;
-
-
-
-
-
-
-
-   const eventTime = parseISODate(event.rec_isoFechaRecepcion!);
-   if (!eventTime) continue;
-
-
-   let matched = false;
-
-
- 
-   for (const [key, events] of seen) {
-     if (!key.startsWith(baseKey + "|")) continue;
-
-
-   
-     const storedTimeStr = key.split("|").pop();
-     const storedTime = storedTimeStr ? new Date(storedTimeStr) : null;
-     if (!storedTime || isNaN(storedTime.getTime())) continue;
-     const diffMinutes = Math.abs(differenceInMinutes(eventTime, storedTime));
-
-
-     if (diffMinutes <= windowMinutes) {
-       events.push(event as EventoProcesado);
-       matched = true;
-       break;
-     }
-   }
-
-
-  
-   if (!matched) {
-     const timeKey = `${baseKey}|${eventTime.toISOString()}`;
-     seen.set(timeKey, [event as EventoProcesado]);
-   }
- }
-
-
-
- let deduplicados = Array.from(seen.values()).map((group) => {
-   return group.sort((a, b) => {
-     const ta = parseISODate(a.rec_isoFechaRecepcion)!.getTime();
-     const tb = parseISODate(b.rec_isoFechaRecepcion)!.getTime();
-     return tb - ta;
-   })[0];
- });
-
-
- return deduplicados;
-};
-
-function parseISODate(isoString: string): Date | null {
-  if (!isoString || typeof isoString !== "string") return null;
-
-  const fecha = parseISO(isoString);
-
-  if (isNaN(fecha.getTime())) {
-    console.warn("Fecha ISO inválida:", isoString);
-    return null;
+    if (!matched) {
+      const timeKey = `${baseKey}|${eventTime.toISOString()}`;
+      seen.set(timeKey, [event]);
+    }
   }
 
-  return fecha;
-}
+ 
+  return Array.from(seen.values()).map(group => {
+    return group.sort(
+      (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
+    )[0];
+  });
+};
+
+
+
 

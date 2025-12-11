@@ -1,11 +1,24 @@
 import { main } from "./QaAgent/QaAgent";
 import { AIprocessReq } from "./quality.services";
 import type { EventEvaluated } from "@/types";
-import {type Request, type Response } from "express";
+import {
+  type EventosProcesadosQueryDTO,
+  type EventosProcesadosResponseDTO,
+} from "./dto/eventosProcesados.dto";
+import { type Request, type Response } from "express";
+
+type EventosProcesadosRequest = Request<
+  Record<string, unknown>,
+  EventosProcesadosResponseDTO,
+  unknown,
+  EventosProcesadosQueryDTO
+> & {
+  filteredEvents?: EventEvaluated[];
+};
 
 export const getFilteredEventsController = async (
-  req: Request & { filteredEvents?: EventEvaluated[] },
-  res: Response
+  req: EventosProcesadosRequest,
+  res: Response<EventosProcesadosResponseDTO>
 ) => {
   try {
     const events = req.filteredEvents;

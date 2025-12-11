@@ -8,7 +8,7 @@
   
     "module": "ESNext",
     "target": "esnext",
-    "types": [],
+    "types": ["vitest", "node"],
     "moduleResolution": "node",
     "sourceMap": true,
     "declaration": true,

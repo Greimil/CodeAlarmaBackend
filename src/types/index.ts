@@ -141,8 +141,8 @@ export interface EventoProcesado {
 
 export interface EventEvaluated {
   eventID: string;
-  createdAt: string;
-  processedAt: string;
+  createdAt: Date;
+  processedAt: Date;
   operator?: string;
   operatorNotes?: string;
   accountId: string;
@@ -155,6 +155,9 @@ export interface EventEvaluated {
   puntuacionLlamada?: number; 
   evaluacionQA?: number; 
   accionRecomendada?: "Ninguna" | "Capacitación" | "Amonestación verbal" | "Amonestación escrita" | "Investigación";
+  status?: string
+  zone: string
+  slaTimeInMiliSeconds?: number
 }
 
 
