@@ -5,7 +5,7 @@ import {
   type ApiResponse,
   type EvaluacionLLM,
   type EventEvaluated,
-  type EventoPendiente,
+  type EventoProcesado,
 } from "@/types";
 import { prisma } from "@/lib/prisma";
 import { llamadas } from "./QaAgent/systemPrompt";
@@ -21,7 +21,7 @@ export const fetchEvents = async (): Promise<ApiResponse> => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "FC02ABC7-74F2-4DDF-9A3F-D8C43A555B5B",
+        Authorization: "38E362E8-407D-4A3A-9C4A-02D28E97933C",
       },
     });
 
@@ -168,7 +168,7 @@ export const createOperatorReports = async (
 // };
 
 export const searchDatabase = async (
-  event: EventoPendiente
+  event: EventoProcesado
 ): Promise<boolean> => {
   try {
     const recordExist = await prisma.processedEvents.findMany({
@@ -183,3 +183,129 @@ export const searchDatabase = async (
     throw err;
   }
 };
+
+
+export const groupEvents = (
+ data: Partial<EventoProcesado>[],
+ windowMinutes: number = 5
+): EventoProcesado[] => {
+ const seen = new Map<string, EventoProcesado[]>();
+
+
+ // Función de limpieza auxiliar para eliminar cualquier espacio innecesario, incluyendo
+ // retornos de carro internos o espacios finales de la base de datos.
+ const cleanString = (value: string | undefined): string => {
+   if (value === undefined || value === null) return "";
+   // 1. Reemplaza cualquier carácter no visible (como \r, \t, etc.) dentro de la cadena con un espacio simple.
+   // 2. Luego usa trim() para eliminar espacios/retornos de carro al inicio/final.
+   // 3. Normaliza espacios múltiples a un solo espacio.
+   return value.replace(/\s+/g, " ").trim();
+ };
+
+
+ for (const event of data) {
+   // 1. CORRECCIÓN Y LIMPIEZA del CLIENT ID
+
+
+   const rawClientId = event.cue_ncuenta ?? event.rec_iid;
+   const clientId = cleanString(rawClientId); // Limpiar espacios finales/iniciales (como en "0001      ")
+   if (!clientId) continue;
+
+
+   // 2. LIMPIEZA de otros atributos clave
+   const rawEventType = event.rec_calarma ?? event.cod_cdescripcion;
+   const eventType = cleanString(rawEventType);
+   if (!eventType) continue;
+
+
+   const eventStatus = cleanString(
+     event.rec_nestado ?? event.rec_idResolucion
+   );
+   if (!eventStatus) continue; // Usamos cleanString para normalizar el estado
+
+
+   const rawZona = event.rec_czona ?? event.zonas_ccodigo;
+   const zona = cleanString(rawZona);
+   if (!zona) continue;
+
+
+   // Aunque observaciones usa .trim() originalmente, la nueva función cleanString es más robusta
+   const rawObservaciones = event.rec_cObservaciones;
+   const observaciones = cleanString(rawObservaciones);
+
+
+   // Clave base (debe ser idéntica si los datos son iguales)
+   const baseKey = `${clientId}|${eventType}|${eventStatus}|${zona}|${observaciones}`;
+
+
+   console.log("--- Evento ---");
+   console.log(`ID: ${event.Id}`);
+   console.log(`Cliente (C/L): ${event.cue_ncuenta ?? event.rec_iid}`);
+   console.log(`BaseKey calculada: "${baseKey}"`);
+   console.log("----------------");
+
+
+   // ... (El resto del código de tiempo y agrupación permanece igual) ...
+
+
+   const eventTime = parseISODate(event.rec_isoFechaRecepcion!);
+   if (!eventTime) continue;
+
+
+   let matched = false;
+
+
+   // Buscar si hay un grupo existente dentro de la ventana
+   for (const [key, events] of seen) {
+     if (!key.startsWith(baseKey + "|")) continue;
+
+
+     // La clave lleva varios "|" (parte fija + timestamp); tomamos el último segmento como fecha.
+     const storedTimeStr = key.split("|").pop();
+     const storedTime = storedTimeStr ? new Date(storedTimeStr) : null;
+     if (!storedTime || isNaN(storedTime.getTime())) continue;
+     const diffMinutes = Math.abs(differenceInMinutes(eventTime, storedTime));
+
+
+     if (diffMinutes <= windowMinutes) {
+       events.push(event as EventoProcesado);
+       matched = true;
+       break;
+     }
+   }
+
+
+   // Si no hay grupo en la ventana → crear uno nuevo
+   if (!matched) {
+     const timeKey = `${baseKey}|${eventTime.toISOString()}`;
+     seen.set(timeKey, [event as EventoProcesado]);
+   }
+ }
+
+
+ // Devolver solo un evento por grupo (el más reciente)
+ let deduplicados = Array.from(seen.values()).map((group) => {
+   return group.sort((a, b) => {
+     const ta = parseISODate(a.rec_isoFechaRecepcion)!.getTime();
+     const tb = parseISODate(b.rec_isoFechaRecepcion)!.getTime();
+     return tb - ta; // más reciente primero
+   })[0];
+ });
+
+
+ return deduplicados;
+};
+
+function parseISODate(isoString: string): Date | null {
+  if (!isoString || typeof isoString !== "string") return null;
+
+  const fecha = parseISO(isoString);
+
+  if (isNaN(fecha.getTime())) {
+    console.warn("Fecha ISO inválida:", isoString);
+    return null;
+  }
+
+  return fecha;
+}
+

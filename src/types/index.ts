@@ -3,10 +3,10 @@ import { Prisma } from "@/generated/prisma";
 export interface ApiResponse {
   success: boolean;
   total: number;
-  rows: EventoPendiente[];
+  rows: EventoProcesado[];
 }
 
-export interface EventoPendiente {
+export interface EventoProcesado {
   Id: string;
   rec_cCategorizacion: string;
   rec_cObservaciones: string;

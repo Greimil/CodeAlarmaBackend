@@ -1,9 +1,9 @@
 import {
-  type EventoPendiente,
+  type EventoProcesado,
   type EventEvaluated,
   type ApiResponse,
 } from "../types";
-import { fetchEvents, searchDatabase } from "../api/quality/quality.services";
+import { fetchEvents, groupEvents, searchDatabase } from "../api/quality/quality.services";
 import { differenceInMinutes, format, formatDate, parseISO } from "date-fns";
 import { es } from "date-fns/locale";
 
@@ -14,11 +14,16 @@ export const filterEventsMiddleware = async (
 ) => {
   try {
     let { rows }: ApiResponse = await fetchEvents();
+
+    rows = groupEvents(rows)
+    
+    console.log(rows.length)
+
     let now = new Date();
     let filteredEvents: EventEvaluated[] = [];
 
     await Promise.all(
-      rows.map(async (evento: EventoPendiente) => {
+      rows.map(async (evento: EventoProcesado) => {
         let createdAtEventDate = parseISODate(evento.rec_isoFechaRecepcion);
 
         if (!createdAtEventDate) return;
