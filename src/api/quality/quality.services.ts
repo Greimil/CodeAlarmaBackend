@@ -204,15 +204,15 @@ export const groupEvents = (
 
 
  for (const event of data) {
-   // 1. CORRECCIÓN Y LIMPIEZA del CLIENT ID
+  
 
 
    const rawClientId = event.cue_ncuenta ?? event.rec_iid;
-   const clientId = cleanString(rawClientId); // Limpiar espacios finales/iniciales (como en "0001      ")
+   const clientId = cleanString(rawClientId);
    if (!clientId) continue;
 
 
-   // 2. LIMPIEZA de otros atributos clave
+
    const rawEventType = event.rec_calarma ?? event.cod_cdescripcion;
    const eventType = cleanString(rawEventType);
    if (!eventType) continue;
@@ -221,7 +221,7 @@ export const groupEvents = (
    const eventStatus = cleanString(
      event.rec_nestado ?? event.rec_idResolucion
    );
-   if (!eventStatus) continue; // Usamos cleanString para normalizar el estado
+   if (!eventStatus) continue; 
 
 
    const rawZona = event.rec_czona ?? event.zonas_ccodigo;
@@ -229,23 +229,17 @@ export const groupEvents = (
    if (!zona) continue;
 
 
-   // Aunque observaciones usa .trim() originalmente, la nueva función cleanString es más robusta
+
    const rawObservaciones = event.rec_cObservaciones;
    const observaciones = cleanString(rawObservaciones);
 
 
-   // Clave base (debe ser idéntica si los datos son iguales)
    const baseKey = `${clientId}|${eventType}|${eventStatus}|${zona}|${observaciones}`;
 
 
-   console.log("--- Evento ---");
-   console.log(`ID: ${event.Id}`);
-   console.log(`Cliente (C/L): ${event.cue_ncuenta ?? event.rec_iid}`);
-   console.log(`BaseKey calculada: "${baseKey}"`);
-   console.log("----------------");
 
 
-   // ... (El resto del código de tiempo y agrupación permanece igual) ...
+
 
 
    const eventTime = parseISODate(event.rec_isoFechaRecepcion!);
@@ -255,12 +249,12 @@ export const groupEvents = (
    let matched = false;
 
 
-   // Buscar si hay un grupo existente dentro de la ventana
+ 
    for (const [key, events] of seen) {
      if (!key.startsWith(baseKey + "|")) continue;
 
 
-     // La clave lleva varios "|" (parte fija + timestamp); tomamos el último segmento como fecha.
+   
      const storedTimeStr = key.split("|").pop();
      const storedTime = storedTimeStr ? new Date(storedTimeStr) : null;
      if (!storedTime || isNaN(storedTime.getTime())) continue;
@@ -275,7 +269,7 @@ export const groupEvents = (
    }
 
 
-   // Si no hay grupo en la ventana → crear uno nuevo
+  
    if (!matched) {
      const timeKey = `${baseKey}|${eventTime.toISOString()}`;
      seen.set(timeKey, [event as EventoProcesado]);
@@ -283,12 +277,12 @@ export const groupEvents = (
  }
 
 
- // Devolver solo un evento por grupo (el más reciente)
+
  let deduplicados = Array.from(seen.values()).map((group) => {
    return group.sort((a, b) => {
      const ta = parseISODate(a.rec_isoFechaRecepcion)!.getTime();
      const tb = parseISODate(b.rec_isoFechaRecepcion)!.getTime();
-     return tb - ta; // más reciente primero
+     return tb - ta;
    })[0];
  });
 
