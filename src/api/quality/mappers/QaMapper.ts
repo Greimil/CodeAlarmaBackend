@@ -1,5 +1,6 @@
-import type { EventoProcesado } from "@/types";
+import type { EventoProcesado, EventEvaluated } from "@/types";
 import type { EventoProcesadoResponseDTO } from "../dto/eventosProcesados.dto";
+import type { Prisma } from "@/generated/prisma";
 import {
   parse,
   differenceInMilliseconds,
@@ -7,6 +8,9 @@ import {
   isValid,
 } from "date-fns";
 
+/**
+ * Mapea eventos de la API externa a DTOs de respuesta
+ */
 export const mapAPiRes = (
   data: EventoProcesado[],
   currentTime?: Date
@@ -17,7 +21,6 @@ export const mapAPiRes = (
 
   for (const evento of data) {
     if (!evento.rec_tFechaRecepcion || !evento.rec_tFechaProceso) {
-      console.warn(`Evento ${evento.Id} sin fechas válidas, omitiendo...`);
       continue;
     }
 
@@ -33,9 +36,6 @@ export const mapAPiRes = (
     );
 
     if (!isValid(fechaCreacion) || !isValid(fechaProcesado)) {
-      console.warn(
-        `Evento ${evento.Id} con fechas inválidas: rec_tFechaRecepcion="${evento.rec_tFechaRecepcion}", rec_tFechaProceso="${evento.rec_tFechaProceso}"`
-      );
       continue;
     }
 
@@ -56,9 +56,6 @@ export const mapAPiRes = (
       differenceInMinutes(nowForComparison, fechaCreacion)
     );
     if (diffMinutes > 60) {
-      console.warn(
-        `Evento ${evento.Id} fuera de ventana: ${diffMinutes} minutos de diferencia`
-      );
       continue;
     }
 
@@ -67,9 +64,6 @@ export const mapAPiRes = (
     const zone = evento.rec_czona ?? evento.zonas_ccodigo;
 
     if (!accountId || !code || !zone) {
-      console.warn(
-        `Evento ${evento.Id} sin campos requeridos: accountId="${accountId}", code="${code}", zone="${zone}"`
-      );
       continue;
     }
 
@@ -91,4 +85,29 @@ export const mapAPiRes = (
   }
 
   return res;
+};
+
+/**
+ * Mapea eventos evaluados a formato Prisma para inserción en base de datos
+ */
+export const toPrismaProcessedEvent = (
+  event: EventEvaluated
+): Prisma.processedEventsCreateManyInput => {
+  return {
+    eventID: event.eventID,
+    createdAt: event.createdAt,
+    processedAt: event.processedAt,
+    operator: event.operator ?? "Sistema",
+    operatorNotes: event.operatorNotes ?? null,
+    accountId: event.accountId,
+    code: event.code,
+    accountObservation: event.accountObservation ?? null,
+    evaluacionLlamada: event.evaluacionLlamada ?? "Pendiente",
+    cumplimientoProtocolo: event.cumplimientoProtocolo ?? "Incumple protocolo",
+    esFaltaRecurrente: event.esFaltaRecurrente ?? false,
+    cumpleSLA: event.cumpleSLA ?? false,
+    puntuacionLlamada: event.puntuacionLlamada ?? 0,
+    evaluacionQA: event.evaluacionQA ?? 0,
+    accionRecomendada: event.accionRecomendada ?? "Ninguna",
+  };
 };

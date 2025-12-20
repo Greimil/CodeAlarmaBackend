@@ -1,5 +1,5 @@
 import { main } from "./QaAgent/QaAgent";
-import { AIprocessReq } from "./quality.services";
+import { AIprocessReq } from "./quality.service";
 import type { EventEvaluated } from "@/types";
 import {
   type EventosProcesadosQueryDTO,
@@ -31,7 +31,6 @@ export const getFilteredEventsController = async (
 
     return res.status(200).json(result);
   } catch (err) {
-    console.error("Error en getFilteredEventsController:", err);
     return res.status(500).json({ error: "Error interno en el servidor" });
   }
 };

@@ -1,7 +1,11 @@
 import app from './app';
+import { pollingService } from './api/monitoring/polling.service';
 
 const PORT = 3000;
 
 app.listen(PORT, () => {
-  console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+
+  pollingService.start();
 });
+
+console.log(`Server is running on port ${PORT}`);

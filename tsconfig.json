@@ -39,6 +39,6 @@
     "moduleDetection": "force",
     "skipLibCheck": true,
   },
-   "include": ["src/**/**/*"],
+   "include": ["src/**/**/*", "../frontend"],
   "exclude": ["node_modules", "dist", "generated", "lib"]
 }

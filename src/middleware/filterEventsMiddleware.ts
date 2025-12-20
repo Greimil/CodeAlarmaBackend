@@ -8,7 +8,7 @@ import {
   filterEventsDb,
   groupEvents,
   searchDatabase,
-} from "../api/quality/quality.services";
+} from "../api/quality/quality.service";
 import { differenceInMinutes, format, formatDate, parseISO } from "date-fns";
 import { es } from "date-fns/locale";
 
@@ -146,8 +146,6 @@ export const filterEventsMiddleware = async (
     // Continuar al siguiente middleware/controller
     next();
   } catch (err) {
-    console.error("Error en filterEventsMiddleware:", err);
-    
     // Responder con error apropiado
     const errorMessage = err instanceof Error 
       ? err.message 

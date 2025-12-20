@@ -9,7 +9,8 @@
     "test:coverage": "vitest run --coverage",
     "dev": "tsx watch ./src/server.ts",
     "debug": "NODE_OPTIONS='--inspect' tsx watch ./src/server.ts",
-    "create-vectorialDb": "npx tsx ./src/api/quality/QaAgent/crea-db.ts"
+    "create-vectorialDb": "npx tsx ./src/api/quality/QaAgent/crea-db.ts",
+    "test:monitoring": "node src/api/monitoring/test-monitoring-client.js"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +20,8 @@
     "@types/better-sqlite3": "^7.6.13",
     "@types/express": "^5.0.6",
     "@types/node": "^24.10.1",
+    "@types/uuid": "^10.0.0",
+    "@types/ws": "^8.5.13",
     "@vitest/coverage-v8": "^4.0.15",
     "prisma": "^7.1.0",
     "tsx": "^4.21.0",
@@ -32,11 +35,17 @@
     "@langchain/textsplitters": "^1.0.1",
     "@prisma/adapter-better-sqlite3": "^7.1.0",
     "@prisma/client": "^7.1.0",
+    "@types/cors": "^2.8.19",
     "chromadb": "^3.1.6",
+    "cors": "^2.8.5",
     "date-fns": "^4.1.0",
     "dotenv": "^16.4.5",
     "express": "^5.2.1",
+    "express-ws": "^5.0.2",
     "langchain": "^1.1.5",
-    "pdf-parse": "^1.1.4"
+    "openai": "^4.68.0",
+    "pdf-parse": "^1.1.4",
+    "uuid": "^11.0.3",
+    "ws": "^8.18.0"
   }
 }

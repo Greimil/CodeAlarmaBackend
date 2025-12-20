@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba - Agente de Monitoreo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .log-entry {
+            margin: 5px 0;
+            padding: 5px;
+            border-left: 3px solid #007bff;
+            background: white;
+        }
+        .log-entry.error {
+            border-left-color: #dc3545;
+            color: #dc3545;
+        }
+        .log-entry.success {
+            border-left-color: #28a745;
+            color: #28a745;
+        }
+        .log-entry.warning {
+            border-left-color: #ffc107;
+            color: #856404;
+        }
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .status.connected {
+            background: #28a745;
+            color: white;
+        }
+        .status.disconnected {
+            background: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Prueba del Agente de Monitoreo en Tiempo Real</h1>
+
+    <div class="container">
+        <h2>1. Configuración</h2>
+        <label>URL del Servidor:</label>
+        <input type="text" id="serverUrl" value="http://localhost:3000" placeholder="http://localhost:3000">
+        
+        <h3>Datos del Evento:</h3>
+        <input type="text" id="eventID" placeholder="Event ID" value="EVT-TEST-001">
+        <input type="text" id="accountId" placeholder="Account ID" value="ACC-TEST-123">
+        <input type="text" id="operator" placeholder="Operador" value="Operador de Prueba">
+        <input type="text" id="code" placeholder="Código de Alarma" value="ALARMA-001">
+        <input type="text" id="zone" placeholder="Zona" value="Zona de Prueba">
+        
+        <button onclick="startSession()">🚀 Iniciar Sesión</button>
+    </div>
+
+    <div class="container">
+        <h2>2. Información de Sesión</h2>
+        <div id="sessionInfo" style="display: none;">
+            <p><strong>Session ID:</strong> <span id="sessionId"></span></p>
+            <p><strong>WebSocket URL:</strong> <span id="wsUrl"></span></p>
+            <div id="protocolSummary"></div>
+            <button onclick="connectWebSocket()">🔌 Conectar WebSocket</button>
+            <button onclick="disconnectWebSocket()">🔌 Desconectar</button>
+            <span id="wsStatus" class="status disconnected">Desconectado</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>3. WebSocket - Enviar Mensajes</h2>
+        <button onclick="sendPing()" id="btnPing" disabled>📤 Enviar Ping</button>
+        <button onclick="sendEndSession()" id="btnEnd" disabled>🛑 Finalizar Sesión</button>
+        <button onclick="simulateAudio()" id="btnAudio" disabled>🎤 Simular Audio (Texto)</button>
+        <br><br>
+        <label>Simular Transcripción (para pruebas):</label>
+        <textarea id="simulatedTranscription" rows="3" placeholder='Ej: "Central de monitoreo, habla Juan Pérez. Llamo por activación de alarma..."'></textarea>
+        <button onclick="sendSimulatedTranscription()" id="btnSimulate" disabled>📝 Enviar Transcripción Simulada</button>
+    </div>
+
+    <div class="container">
+        <h2>4. Logs</h2>
+        <button onclick="clearLogs()">🗑️ Limpiar Logs</button>
+        <div id="logs" class="log"></div>
+    </div>
+
+    <script>
+        let sessionId = null;
+        let ws = null;
+        const API_URL = 'http://localhost:3000';
+        const WS_BASE_URL = 'ws://localhost:3000';
+
+        function log(message, type = 'info') {
+            const logsDiv = document.getElementById('logs');
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logsDiv.appendChild(entry);
+            logsDiv.scrollTop = logsDiv.scrollHeight;
+        }
+
+        function clearLogs() {
+            document.getElementById('logs').innerHTML = '';
+        }
+
+        async function startSession() {
+            const serverUrl = document.getElementById('serverUrl').value;
+            const eventData = {
+                eventID: document.getElementById('eventID').value,
+                accountId: document.getElementById('accountId').value,
+                operator: document.getElementById('operator').value,
+                code: document.getElementById('code').value,
+                zone: document.getElementById('zone').value,
+            };
+
+            log('Iniciando sesión de monitoreo...', 'info');
+
+            try {
+                const response = await fetch(`${serverUrl}/api/monitoring/start`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(eventData),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                sessionId = data.sessionId;
+
+                document.getElementById('sessionId').textContent = sessionId;
+                document.getElementById('wsUrl').textContent = data.websocketUrl;
+                document.getElementById('protocolSummary').innerHTML = 
+                    `<h3>Resumen del Protocolo:</h3><pre>${data.protocolSummary}</pre><h3>Pasos:</h3><ul>${data.steps.map(s => `<li>${s.stepNumber}. ${s.description}${s.isCritical ? ' [CRÍTICO]' : ''}</li>`).join('')}</ul>`;
+                document.getElementById('sessionInfo').style.display = 'block';
+
+                log(`✅ Sesión creada: ${sessionId}`, 'success');
+                log(`📋 Protocolo con ${data.steps.length} pasos`, 'info');
+            } catch (error) {
+                log(`❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        function connectWebSocket() {
+            if (!sessionId) {
+                log('❌ Primero debes crear una sesión', 'error');
+                return;
+            }
+
+            const wsUrl = `${WS_BASE_URL}/ws/monitoring/${sessionId}`;
+            log(`Conectando a WebSocket: ${wsUrl}`, 'info');
+
+            ws = new WebSocket(wsUrl);
+
+            ws.onopen = () => {
+                log('✅ WebSocket conectado', 'success');
+                document.getElementById('wsStatus').textContent = 'Conectado';
+                document.getElementById('wsStatus').className = 'status connected';
+                document.getElementById('btnPing').disabled = false;
+                document.getElementById('btnEnd').disabled = false;
+                document.getElementById('btnAudio').disabled = false;
+                document.getElementById('btnSimulate').disabled = false;
+            };
+
+            ws.onmessage = (event) => {
+                try {
+                    const message = JSON.parse(event.data);
+                    handleWebSocketMessage(message);
+                } catch (error) {
+                    log(`📦 Mensaje binario recibido (audio chunk)`, 'info');
+                }
+            };
+
+            ws.onerror = (error) => {
+                log(`❌ Error en WebSocket: ${error}`, 'error');
+            };
+
+            ws.onclose = () => {
+                log('🔌 WebSocket cerrado', 'info');
+                document.getElementById('wsStatus').textContent = 'Desconectado';
+                document.getElementById('wsStatus').className = 'status disconnected';
+                document.getElementById('btnPing').disabled = true;
+                document.getElementById('btnEnd').disabled = true;
+                document.getElementById('btnAudio').disabled = true;
+                document.getElementById('btnSimulate').disabled = true;
+            };
+        }
+
+        function handleWebSocketMessage(message) {
+            switch (message.type) {
+                case 'transcription':
+                    log(`📝 Transcripción: ${message.data.text}`, 'info');
+                    break;
+                case 'feedback':
+                    log(`⚠️ Feedback: ${message.data.message}`, 'warning');
+                    break;
+                case 'step-completed':
+                    log(`✅ Paso completado: ${message.data.message}`, 'success');
+                    break;
+                case 'protocol-status':
+                    const status = message.data;
+                    log(`📊 Estado: ${status.completedSteps}/${status.totalSteps} pasos completados (${status.compliancePercentage}%)`, 'info');
+                    if (status.missingCriticalSteps && status.missingCriticalSteps.length > 0) {
+                        log(`⚠️ Pasos críticos faltantes: ${status.missingCriticalSteps.length}`, 'warning');
+                    }
+                    break;
+                case 'pong':
+                    log('🏓 Pong recibido', 'info');
+                    break;
+                case 'error':
+                    log(`❌ Error: ${message.data.message}`, 'error');
+                    break;
+                default:
+                    log(`📦 Mensaje: ${JSON.stringify(message)}`, 'info');
+            }
+        }
+
+        function disconnectWebSocket() {
+            if (ws) {
+                ws.close();
+                ws = null;
+            }
+        }
+
+        function sendPing() {
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify({ type: 'ping' }));
+                log('📤 Ping enviado', 'info');
+            }
+        }
+
+        function sendEndSession() {
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify({ type: 'end-session' }));
+                log('🛑 Finalizando sesión...', 'info');
+                setTimeout(() => {
+                    disconnectWebSocket();
+                }, 1000);
+            }
+        }
+
+        function simulateAudio() {
+            log('🎤 Simulando envío de audio...', 'info');
+            // En producción, aquí enviarías chunks de audio reales
+            // Por ahora, solo mostramos un mensaje
+            log('💡 Nota: Para enviar audio real, necesitas capturar audio del micrófono y enviarlo como Buffer', 'info');
+        }
+
+        function sendSimulatedTranscription() {
+            const text = document.getElementById('simulatedTranscription').value;
+            if (!text) {
+                log('❌ Por favor ingresa una transcripción', 'error');
+                return;
+            }
+
+            // Simulamos que esta transcripción viene de Whisper
+            // En producción, esto se haría automáticamente cuando llega audio
+            log(`📝 Simulando transcripción: "${text}"`, 'info');
+            
+            // Nota: En producción, la transcripción se procesa automáticamente
+            // cuando llegan chunks de audio. Aquí solo mostramos cómo funcionaría.
+            log('💡 En producción, el audio se transcribe automáticamente con Whisper', 'info');
+        }
+    </script>
+</body>
+</html>
+

@@ -13,11 +13,9 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-
-const dataPath = path.join(__dirname, "knowledge-base.json");
+// Ruta a la base de conocimiento en resources
+const dataPath = path.join(__dirname, "../../../../resources/knowledge-base.json");
 const data = JSON.parse(await fs.readFile(dataPath, "utf8"));
-
-console.log(`📚 Cargando ${data.docs.length} chunks...`);
 
 const embeddings = new OpenAIEmbeddings();
 const vectorStore = new MemoryVectorStore(embeddings);

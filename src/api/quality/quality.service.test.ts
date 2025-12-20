@@ -3,7 +3,7 @@ import {
   calcularPuntuaciones,
   groupEvents,
   safeParseLLMResponse,
-} from "./quality.services";
+} from "./quality.service";
 import { mapAPiRes } from "./mappers/QaMapper";
 import type { EventoProcesado } from "@/types";
 import type { EventoProcesadoResponseDTO } from "./dto/eventosProcesados.dto";

@@ -1,0 +1,257 @@
+{
+  "docs": [
+    {
+      "pageContent": "Manual de Respuesta a Eventos \nPrioritarios\nVersión: 18/12/2025\nPropósito: Proporcionar procedimientos claros y estructurados para responder a \neventos de alarma prioritarios, adaptados por tipo de cuenta y preferencias del \ncliente.\n1. Descripción General\nEste manual guía al operador en la respuesta a eventos prioritarios de alarmas. \nLos procedimientos varían según:\nTipo de cuenta: Residencial, Comercial o Banco.\nCriterios específicos del cliente: Pasos adicionales, modificaciones o \npreferencias (ejemplo: contacto por WhatsApp en lugar de llamada).\nSiempre verificar en la ficha de la cuenta del cliente antes de actuar.\n2. Procedimiento General por Tipo de Cuenta\n2.1. Residencial y Comercial (Procedimiento Estándar)\nEl flujo es idéntico para Residencial y Comercial, salvo indicaciones específicas \ndel cliente.\n Llamar a las personas autorizadas:\nSeguir el orden de prioridades establecido por el cliente (o el \npredeterminado).",
+      "metadata": {
+        "source": "C:\\Users\\greim\\Desktop\\progrmacion\\CodeAlarma\\saas2\\backend\\resources\\Manual_de_Respuesta_a_Eventos_Prioritarios12-18-25.pdf",
+        "pdf": {
+          "version": "1.10.100",
+          "info": {
+            "PDFFormatVersion": "1.4",
+            "IsAcroFormPresent": false,
+            "IsXFAPresent": false,
+            "Title": "Manual de Respuesta a Eventos Prioritarios",
+            "Creator": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/137.0.0.0 Safari/537.36",
+            "Producer": "Skia/PDF m137",
+            "CreationDate": "D:20251218212401+00'00'",
+            "ModDate": "D:20251218212401+00'00'"
+          },
+          "metadata": null,
+          "totalPages": 5
+        },
+        "loc": {
+          "pageNumber": 1,
+          "lines": {
+            "from": 1,
+            "to": 20
+          }
+        }
+      }
+    },
+    {
+      "pageContent": "del cliente.\n Llamar a las personas autorizadas:\nSeguir el orden de prioridades establecido por el cliente (o el \npredeterminado).\nConfirmar identidad antes de proporcionar detalles del evento.\nRealizar 2 intentos por contacto 1 inicial  1 reintento).\nSi no hay respuesta: Enviar patrulla motorizada o Policía Nacional (según \ncorresponda).\n Al contactar al cliente:\nManual de Respuesta a Eventos Prioritarios1",
+      "metadata": {
+        "source": "C:\\Users\\greim\\Desktop\\progrmacion\\CodeAlarma\\saas2\\backend\\resources\\Manual_de_Respuesta_a_Eventos_Prioritarios12-18-25.pdf",
+        "pdf": {
+          "version": "1.10.100",
+          "info": {
+            "PDFFormatVersion": "1.4",
+            "IsAcroFormPresent": false,
+            "IsXFAPresent": false,
+            "Title": "Manual de Respuesta a Eventos Prioritarios",
+            "Creator": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/137.0.0.0 Safari/537.36",
+            "Producer": "Skia/PDF m137",
+            "CreationDate": "D:20251218212401+00'00'",
+            "ModDate": "D:20251218212401+00'00'"
+          },
+          "metadata": null,
+          "totalPages": 5
+        },
+        "loc": {
+          "pageNumber": 1,
+          "lines": {
+            "from": 17,
+            "to": 26
+          }
+        }
+      }
+    },
+    {
+      "pageContent": "Confirmar si la situación está bajo control.\nVerificar palabra clave (si aplica; consultar en la cuenta).\n Cierre del evento:\nRegistrar notas detalladas.\nCerrar el evento solo tras confirmación de resolución.\n2.2. Bancos (Procedimiento Especial)\n Llamar al centro de monitoreo del banco.\n Enviar patrulla motorizada o Policía Nacional (según protocolo del banco).\n Poner el evento en espera por un mínimo de 20 minutos.\n Al reactivarse el evento:\nConfirmar llegada de la patrulla o policía al sitio.\nRegistrar resultado y cerrar el evento.\n3. Tipos de Eventos Prioritarios\nNombre del EventoAcrónimoDescripciónPrioridad\nBurglaryBURRobo/intrusión en la propiedadCrítica\nPanicPAN / DURActivación de botón de pánicoCrítica\nFire AlarmFIRIncendio detectadoCrítica\nSistema\ndesconectado\nASC\nSistema apagado (sin\ncomunicación)\nCrítica\n4. Protocolos Específicos por Tipo de Evento\n4.1. Burglary (BUR) - Intrusión\nContactar responsables siguiendo orden de prioridades.\nMínimo 2 llamadas por contacto.",
+      "metadata": {
+        "source": "C:\\Users\\greim\\Desktop\\progrmacion\\CodeAlarma\\saas2\\backend\\resources\\Manual_de_Respuesta_a_Eventos_Prioritarios12-18-25.pdf",
+        "pdf": {
+          "version": "1.10.100",
+          "info": {
+            "PDFFormatVersion": "1.4",
+            "IsAcroFormPresent": false,
+            "IsXFAPresent": false,
+            "Title": "Manual de Respuesta a Eventos Prioritarios",
+            "Creator": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/137.0.0.0 Safari/537.36",
+            "Producer": "Skia/PDF m137",
+            "CreationDate": "D:20251218212401+00'00'",
+            "ModDate": "D:20251218212401+00'00'"
+          },
+          "metadata": null,
+          "totalPages": 5
+        },
+        "loc": {
+          "pageNumber": 2,
+          "lines": {
+            "from": 1,
+            "to": 27
+          }
+        }
+      }
+    },
+    {
+      "pageContent": "comunicación)\nCrítica\n4. Protocolos Específicos por Tipo de Evento\n4.1. Burglary (BUR) - Intrusión\nContactar responsables siguiendo orden de prioridades.\nMínimo 2 llamadas por contacto.\nAl contactar: Confirmar identidad, palabra clave (si existe) y si requieren \nayuda.\nManual de Respuesta a Eventos Prioritarios2",
+      "metadata": {
+        "source": "C:\\Users\\greim\\Desktop\\progrmacion\\CodeAlarma\\saas2\\backend\\resources\\Manual_de_Respuesta_a_Eventos_Prioritarios12-18-25.pdf",
+        "pdf": {
+          "version": "1.10.100",
+          "info": {
+            "PDFFormatVersion": "1.4",
+            "IsAcroFormPresent": false,
+            "IsXFAPresent": false,
+            "Title": "Manual de Respuesta a Eventos Prioritarios",
+            "Creator": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/137.0.0.0 Safari/537.36",
+            "Producer": "Skia/PDF m137",
+            "CreationDate": "D:20251218212401+00'00'",
+            "ModDate": "D:20251218212401+00'00'"
+          },
+          "metadata": null,
+          "totalPages": 5
+        },
+        "loc": {
+          "pageNumber": 2,
+          "lines": {
+            "from": 22,
+            "to": 30
+          }
+        }
+      }
+    },
+    {
+      "pageContent": "Sin contacto: Enviar patrulla motorizada.\nEl evento queda en espera hasta confirmar llegada al sitio.\nCerrar tras confirmación y registrar notas detalladas.\n4.2. Panic (PAN / DUR) - Pánico\nContactar responsables siguiendo orden de prioridades.\nMínimo 2 llamadas por contacto.\nAl contactar: Confirmar identidad, palabra clave (si existe) y si requieren \nayuda.\nSin contacto: Enviar patrulla motorizada.\nEl evento queda en espera hasta confirmar llegada al sitio.\nCerrar tras confirmación y registrar notas detalladas.\n4.3. Fire Alarm (FIR) - Incendio\nLlamar una sola vez a cada contacto.\nSin contacto: Enviar Policía, Bomberos o patrulla motorizada (según \ncorresponda).\nEl evento queda en espera hasta confirmar llegada al sitio.\nCerrar tras confirmación y registrar notas detalladas.\n4.4. Sistema Desconectado (ASC)\nIntentar contacto hasta 3 veces a los responsables.\nSi no hay contacto:\nFuera de franja horaria peligrosa: Poner en espera máximo 30 minutos \nmientras se sigue intentando contacto.",
+      "metadata": {
+        "source": "C:\\Users\\greim\\Desktop\\progrmacion\\CodeAlarma\\saas2\\backend\\resources\\Manual_de_Respuesta_a_Eventos_Prioritarios12-18-25.pdf",
+        "pdf": {
+          "version": "1.10.100",
+          "info": {
+            "PDFFormatVersion": "1.4",
+            "IsAcroFormPresent": false,
+            "IsXFAPresent": false,
+            "Title": "Manual de Respuesta a Eventos Prioritarios",
+            "Creator": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/137.0.0.0 Safari/537.36",
+            "Producer": "Skia/PDF m137",
+            "CreationDate": "D:20251218212401+00'00'",
+            "ModDate": "D:20251218212401+00'00'"
+          },
+          "metadata": null,
+          "totalPages": 5
+        },
+        "loc": {
+          "pageNumber": 3,
+          "lines": {
+            "from": 1,
+            "to": 22
+          }
+        }
+      }
+    },
+    {
+      "pageContent": "Intentar contacto hasta 3 veces a los responsables.\nSi no hay contacto:\nFuera de franja horaria peligrosa: Poner en espera máximo 30 minutos \nmientras se sigue intentando contacto.\nEn franja horaria peligrosa: Enviar patrulla motorizada o Policía.\nAl contactar: Informar sobre desconexión, ofrecer servicio técnico, registrar \ndecisiones.\nCerrar el evento tras resolución.\nManual de Respuesta a Eventos Prioritarios3",
+      "metadata": {
+        "source": "C:\\Users\\greim\\Desktop\\progrmacion\\CodeAlarma\\saas2\\backend\\resources\\Manual_de_Respuesta_a_Eventos_Prioritarios12-18-25.pdf",
+        "pdf": {
+          "version": "1.10.100",
+          "info": {
+            "PDFFormatVersion": "1.4",
+            "IsAcroFormPresent": false,
+            "IsXFAPresent": false,
+            "Title": "Manual de Respuesta a Eventos Prioritarios",
+            "Creator": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/137.0.0.0 Safari/537.36",
+            "Producer": "Skia/PDF m137",
+            "CreationDate": "D:20251218212401+00'00'",
+            "ModDate": "D:20251218212401+00'00'"
+          },
+          "metadata": null,
+          "totalPages": 5
+        },
+        "loc": {
+          "pageNumber": 3,
+          "lines": {
+            "from": 19,
+            "to": 27
+          }
+        }
+      }
+    },
+    {
+      "pageContent": "5. Evaluación de Riesgo por Franja Horaria y Tipo de \nCuenta (para evento ASC)\nLeyenda de Severidad\nBaja: Riesgo operativo reducido (posible causa técnica o humana).\nMedia: Requiere atención y seguimiento.\nAlta: Evento crítico, alta probabilidad de incidente.\nCrítica / Inminente: Riesgo extremo, acción inmediata.\nFranja Diurna (Lunes a Viernes, 08:00 – 18:00)\nTipo de CuentaSeveridadJustificación\nBancoAltaObjetivo sensible aunque con personal y actividad.\nResidencialMediaNormalmente ocupantes o movimientos esperados.\nComercioMediaPosibles causas técnicas o actividad normal.\nFranja Tarde/Noche (Lunes a Domingo, 18:00 – 23:00)\nTipo de CuentaSeveridadJustificación\nBancoCrítica\nFuera de horario operativo, alta probabilidad de evento\nreal.\nResidencialAlta\nRiesgo aumenta significativamente aunque puede\nhaber personas.\nComercioAltaLocal cerrado o en cierre, evento no esperado.\nFranja Madrugada (Todos los días, 23:00 – 06:00)\nTipo de CuentaSeveridadJustificación",
+      "metadata": {
+        "source": "C:\\Users\\greim\\Desktop\\progrmacion\\CodeAlarma\\saas2\\backend\\resources\\Manual_de_Respuesta_a_Eventos_Prioritarios12-18-25.pdf",
+        "pdf": {
+          "version": "1.10.100",
+          "info": {
+            "PDFFormatVersion": "1.4",
+            "IsAcroFormPresent": false,
+            "IsXFAPresent": false,
+            "Title": "Manual de Respuesta a Eventos Prioritarios",
+            "Creator": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/137.0.0.0 Safari/537.36",
+            "Producer": "Skia/PDF m137",
+            "CreationDate": "D:20251218212401+00'00'",
+            "ModDate": "D:20251218212401+00'00'"
+          },
+          "metadata": null,
+          "totalPages": 5
+        },
+        "loc": {
+          "pageNumber": 4,
+          "lines": {
+            "from": 1,
+            "to": 23
+          }
+        }
+      }
+    },
+    {
+      "pageContent": "haber personas.\nComercioAltaLocal cerrado o en cierre, evento no esperado.\nFranja Madrugada (Todos los días, 23:00 – 06:00)\nTipo de CuentaSeveridadJustificación\nBancoCrítica / InminenteSin personal, máxima alerta.\nResidencialAltaEvento crítico (menor gravedad relativa que banco).\nComercioCríticaLocal cerrado, evento altamente sospechoso.\n6. Recomendaciones Finales\nManual de Respuesta a Eventos Prioritarios4",
+      "metadata": {
+        "source": "C:\\Users\\greim\\Desktop\\progrmacion\\CodeAlarma\\saas2\\backend\\resources\\Manual_de_Respuesta_a_Eventos_Prioritarios12-18-25.pdf",
+        "pdf": {
+          "version": "1.10.100",
+          "info": {
+            "PDFFormatVersion": "1.4",
+            "IsAcroFormPresent": false,
+            "IsXFAPresent": false,
+            "Title": "Manual de Respuesta a Eventos Prioritarios",
+            "Creator": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/137.0.0.0 Safari/537.36",
+            "Producer": "Skia/PDF m137",
+            "CreationDate": "D:20251218212401+00'00'",
+            "ModDate": "D:20251218212401+00'00'"
+          },
+          "metadata": null,
+          "totalPages": 5
+        },
+        "loc": {
+          "pageNumber": 4,
+          "lines": {
+            "from": 20,
+            "to": 28
+          }
+        }
+      }
+    },
+    {
+      "pageContent": "Siempre verificar criterios específicos del cliente antes de iniciar cualquier \nacción.\nRegistrar todo en las notas del evento (detalles completos y decisiones \ntomadas).\nCerrar el evento solo tras confirmación de seguridad o resolución completa.\nUsar lenguaje claro, calmado y profesional en todas las comunicaciones con \nclientes.\nManual de Respuesta a Eventos Prioritarios5",
+      "metadata": {
+        "source": "C:\\Users\\greim\\Desktop\\progrmacion\\CodeAlarma\\saas2\\backend\\resources\\Manual_de_Respuesta_a_Eventos_Prioritarios12-18-25.pdf",
+        "pdf": {
+          "version": "1.10.100",
+          "info": {
+            "PDFFormatVersion": "1.4",
+            "IsAcroFormPresent": false,
+            "IsXFAPresent": false,
+            "Title": "Manual de Respuesta a Eventos Prioritarios",
+            "Creator": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/137.0.0.0 Safari/537.36",
+            "Producer": "Skia/PDF m137",
+            "CreationDate": "D:20251218212401+00'00'",
+            "ModDate": "D:20251218212401+00'00'"
+          },
+          "metadata": null,
+          "totalPages": 5
+        },
+        "loc": {
+          "pageNumber": 5,
+          "lines": {
+            "from": 1,
+            "to": 8
+          }
+        }
+      }
+    }
+  ],
+  "createdAt": "2025-12-18T21:35:44.251Z"
+}
